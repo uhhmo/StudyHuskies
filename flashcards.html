@@ -2,14 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="your name">
-    <meta name="description" content="description of your page">
-    <title>My Page Title</title>
+    <meta name="author" content="Anderson Liew">
+    <meta name="description" content="This page is for users to add or delete flashcards and organize them into different classes they're taking.">
+    <title>Flashcard</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     ...
-    Content goes here!
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="flashcards.html">Flashcards</a></li>
+            <li><a href="gameQuiz.html">Quiz</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    
+    <header>
+        <h1>INFO 340</h1>
+        <p>Flashcards</p>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Create Flashcards</h2>
+            <form>
+                <label for="question">Enter Question</label>
+                <input type="text" id="question" name="question" placeholder="Type a question">
+                <label for="answer">Enter Answer</label>
+                <input type="text" id="answer" name="answer" placeholder="Type an answer">
+                <div class="button-row">
+                    <button type="button">Delete</button>
+                    <button type="button">Add</button>
+                </div>
+            </form>
+        </section>
+        <section>
+            <h2>Current Cards</h2>
+            <article class="flashcard">
+                <h3>What is a semantic tag?</h3>
+                <p>A semantic tag describes the meaning of its content.</p>
+            </article>
+            
+            <article class="flashcard">
+                <h3>What does the &lt;p&gt; tag do?</h3>
+                <p>It creates a paragraph of text.</p>
+            </article>
+            <article class="flashcard">
+                <h3>What does CSS control?</h3>
+                <p>CSS controls layout and styling.</p>
+            </article>
+        </section>
+    </main>
+    
+    <footer>
+        <p>INFO 340 Project - Winter 2026</p>
+    </footer>
     ...
 </body>
 </html>
