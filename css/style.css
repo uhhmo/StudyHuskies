@@ -2,12 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: white;
 }
 
 /* Navigation */
 nav {
-    background-color: purple;
+    background-color: #800080;
     padding: 10px;
 }
 
@@ -22,6 +21,7 @@ nav ul {
 nav a {
     color: white;
     text-decoration: none;
+    padding-left: 10px;
 }
 
 /* Header */
@@ -40,7 +40,7 @@ header p {
 
 /* Main content */
 main {
-    padding: 20px;
+
 }
 
 /* Form section */
@@ -96,5 +96,65 @@ footer {
     main {
         max-width: 800px;
         margin: 0 auto;
+    }
+}
+
+/* blakes css */
+
+.header-image {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('../img/suzz.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.header-text h1 {
+    font-size: 3.5rem;
+    color: white;
+    margin: 0;
+}
+
+.btn-home {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #800080;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-home:hover {
+    background-color: #5a005a;
+    color: #f2f2f2;
+}
+
+.husky-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #000; 
+    margin: 0 auto;
+}
+
+
+@media (min-width: 768px) {
+    .hero-image-wrap {
+        height: 70vh;
+    }
+    .hero-text h1 {
+        font-size: 5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-text h1 {
+        font-size: 2rem;
     }
 }
