@@ -2,14 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="your name">
-    <meta name="description" content="description of your page">
-    <title>My Page Title</title>
+    <meta name="author" content="Momo">
+    <meta name="description" content="Gamified quiz page for Study Huskies">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>quizGame</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    ...
-    Content goes here!
-    ...
+    <header>
+        <nav class="nav sticky-top">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="flashcards.html">Flashcards</a></li>
+                <li><a href="gameQuiz.html" class="active">Quiz</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+     <main class="container my-5">
+
+        <section class="mb-5 p-4 border rounded shadow-sm text-center">
+            <h1>Game Quiz</h1>
+            <p>Test your knowledge with timed, interactive challenges.</p>
+        </section>
+
+        <section class="mb-5 p-4 border rounded shadow-sm">
+            <h2>Select Quiz Mode</h2>
+
+            <form>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="quizMode" id="recallMode">
+                    <label class="form-check-label" for="recallMode">
+                        <strong>Recall Mode</strong> - Fill in missing words from flashcard definitions
+                    </label>
+                </div>
+
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="quizMode" id="speedMode">
+                    <label class="form-check-label" for="speedMode">
+                        <strong>Speed Mode</strong> - Multiple choice questions under time pressure
+                    </label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="quizMode" id="mixedMode">
+                    <label class="form-check-label" for="mixedMode">
+                        <strong>Mixed Mode</strong> - Combination of recall and multiple choice
+                    </label>
+                </div>
+
+                <button type="button" class="btn btn-dark">Start Quiz</button>
+            </form>
+        </section>
+
+        <section class="mb-5 p-4 border rounded shadow-sm">
+
+            <!-- example multiple choice game -->
+            <div class="d-flex justify-content-between mb-3">
+                <span> ⏱ Time Remaining: <strong>01:20</strong></span>
+                <span>Question <strong>3 / 10</strong></span>
+                <span>⭐ Score: <strong>150</strong></span>
+            </div>
+            
+
+            <!-- example fill in the blank -->
+            <div class="mb-4">
+                <p class="fs-5">
+                    The _____ Object Model allows JavaScript to interact with HTML documents.
+                </p>
+
+                <input type="text" class="form-control mb-3" placeholder="Type your answer here">
+            </div>
+
+            <button type="button" class="btn btn-dark">Submit Answer</button>
+        </section>
+
+        <!-- example quiz scoreboard -->
+        <section class="p-4 border rounded shadow-sm text-center">
+            <h2>Quiz Complete!</h2>
+
+            <p><strong>Final Score:</strong> 720</p>
+            <p><strong>Accuracy:</strong> 80%</p>
+            <p><strong>Time Spent:</strong> 2:45</p>
+
+            <!-- reccomends which flashcards to review -->
+            <h3 class="mt-4">Recommended Review</h3>
+            <ul class="list-unstyled">
+                <li>JavaScript Events</li>
+                <li>DOM Traversal</li>
+            </ul>
+
+            <!-- links to restart game or review flashcards -->
+            <div class="mt-3">
+                <a href="flashcards.html" class="btn btn-outline-dark me-2">Review Flashcards</a>
+                <a href="gameQuiz.html" class="btn btn-dark">Play Again</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p> INFO 340 Project - Winter 2026</p>
+    </footer>
 </body>
 </html>
