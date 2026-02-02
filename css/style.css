@@ -145,16 +145,16 @@ footer {
 
 
 @media (min-width: 768px) {
-    .hero-image-wrap {
+    .header-image {
         height: 70vh;
     }
-    .hero-text h1 {
+    .header-text h1 {
         font-size: 5rem;
     }
 }
 
 @media (max-width: 576px) {
-    .hero-text h1 {
+    .header-text h1 {
         font-size: 2rem;
     }
 }
