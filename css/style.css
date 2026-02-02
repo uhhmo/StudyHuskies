@@ -209,5 +209,15 @@ footer {
 .about-image {
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('../img/UWCampus.jpg');
-   
+    background-size: cover;
+    background-position: center;
+    
+}
+
+.sign-in-image {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('../img/SuzzOutside.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
