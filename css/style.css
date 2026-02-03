@@ -92,6 +92,10 @@ button {
 }
 
 /* Courses Page */
+.courses-header {
+    text-align: center;
+}
+
 .courses-container {
     display: flex; 
     flex-wrap: wrap;
@@ -116,12 +120,16 @@ button {
 }
 
 .course-card {
-    flex: 0 0 250px;
+    flex: 0 0 220px;
+    max-width: 220px;
     background-color: white;
-    margin: 0.5rem;
     border-radius: 10px;
     padding: 0.75rem; 
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+}
+
+.course-card:hover {
+    background-color: #800080;
 }
 
 /* Grid of cards */
