@@ -2,10 +2,19 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Navigation */
@@ -44,7 +53,8 @@ header p {
 
 /* Main content */
 main {
-
+    flex: 1;
+    padding: 20px;
 }
 
 /* Form section */
@@ -72,8 +82,13 @@ input {
 }
 
 button {
-    padding: 8px;
+    padding: 8px 16px;
     font-size: 14px;
+    background-color: purple; 
+    color: white;             
+    border: none;             
+    border-radius: 5px;      
+    cursor: pointer;
 }
 
 /* Courses Page */
@@ -109,17 +124,49 @@ button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
 }
 
-/* Flashcards */
-.flashcard {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-top: 15px;
+/* Grid of cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 900px;
+    margin: 20px auto;
 }
 
-.flashcard h3 {
-    margin-top: 0;
+/* Card style */
+.study-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 18px;
+    min-height: 190px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
 }
+
+.study-card h3 {
+    font-size: 1.05rem;
+    margin: 0 0 10px 0;
+    line-height: 1.25;
+}
+
+.study-card p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #444;
+    line-height: 1.35;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+}
+
 
 /* Footer */
 footer {
@@ -199,5 +246,15 @@ footer {
 .about-image {
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('../img/UWCampus.jpg');
-   
+    background-size: cover;
+    background-position: center;
+    
+}
+
+.sign-in-image {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('../img/SuzzOutside.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
