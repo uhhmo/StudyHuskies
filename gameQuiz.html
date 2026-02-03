@@ -33,12 +33,13 @@
     <main class="container my-5">
 
         <section class="mb-5 p-4 border rounded shadow-sm text-center">
-            <h1>Game Quiz</h1>
-            <p>Test your knowledge with timed, interactive challenges.</p>
+            <h1>Adventure Quiz</h1>
+            <p>Test your knowledge on an adventure! Expore with interactive flashcards, but be careful, 
+                get a question wrong and you'll be sent back to the checkpoint!.</p>
         </section>
 
         <section class="mb-5 p-4 border rounded shadow-sm">
-            <h2>Select Quiz Mode</h2>
+            <h2>Select Adventure Mode</h2>
 
             <form>
                 <div class="form-check mb-2">
@@ -73,6 +74,7 @@
                 <span> ⏱ Time Remaining: <strong>01:20</strong></span>
                 <span>Question <strong>3 / 10</strong></span>
                 <span>⭐ Score: <strong>150</strong></span>
+                <span> Lives: <strong>2</strong></span>
             </div>
 
 
@@ -88,13 +90,32 @@
             <button type="button" class="btn btn-dark">Submit Answer</button>
         </section>
 
+        <div class="container text-center p-4">
+            <div class="row">
+                <div class="col-2">
+                    <img src="../img/wizard.png" class="wizard" alt="The adventurer">
+                </div>
+            </div>
+
+            <div class="progress mt-2">
+                <div class="progress-bar bg-dark"></div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col">Start</div>
+                <div class="col">Checkpoint A</div>
+                <div class="col">Checkpoint B</div>
+                <div class="col">Goal!</div>
+            </div>
+        </div>
+
         <!-- example quiz scoreboard -->
         <section class="p-4 border rounded shadow-sm text-center">
-            <h2>Quiz Complete!</h2>
+            <h2>Adventure Complete!</h2>
 
             <p><strong>Final Score:</strong> 720</p>
             <p><strong>Accuracy:</strong> 80%</p>
-            <p><strong>Time Spent:</strong> 2:45</p>
+            <p><strong>Time Spent Adventuring:</strong> 2:45</p>
 
             <!-- reccomends which flashcards to review -->
             <h3 class="mt-4">Recommended Review</h3>

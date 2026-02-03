@@ -2,7 +2,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
 }
@@ -29,13 +30,13 @@ nav ul {
     display: flex;
     gap: 15px;
     margin: 0;
-    padding: 10;
+    padding: 10px;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    
+
 }
 
 /* Header */
@@ -85,10 +86,10 @@ input {
 button {
     padding: 8px 16px;
     font-size: 14px;
-    background-color: purple; 
-    color: white;             
-    border: none;             
-    border-radius: 5px;      
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -98,7 +99,7 @@ button {
 }
 
 .courses-container {
-    display: flex; 
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -110,7 +111,7 @@ button {
 
 .courses-container h2 {
     text-align: center;
-    margin-bottom: 0.5rem; 
+    margin-bottom: 0.5rem;
 }
 
 .course-card-container {
@@ -125,7 +126,7 @@ button {
     max-width: 220px;
     background-color: white;
     border-radius: 10px;
-    padding: 0.75rem; 
+    padding: 0.75rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
 }
 
@@ -149,7 +150,7 @@ button {
     border-radius: 16px;
     padding: 18px;
     min-height: 190px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
     display: flex;
     flex-direction: column;
 }
@@ -169,11 +170,15 @@ button {
 
 /* Responsive */
 @media (max-width: 900px) {
-    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 600px) {
-    .cards-grid { grid-template-columns: 1fr; }
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 
@@ -195,8 +200,8 @@ footer {
 /* blakes css */
 
 .header-image {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('../img/suzz.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../img/suzz.jpg');
     background-size: cover;
     background-position: center;
     height: 50vh;
@@ -232,7 +237,7 @@ footer {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid #000; 
+    border: 3px solid #000;
     margin: 0 auto;
 }
 
@@ -241,6 +246,7 @@ footer {
     .header-image {
         height: 70vh;
     }
+
     .header-text h1 {
         font-size: 5rem;
     }
@@ -253,16 +259,28 @@ footer {
 }
 
 .about-image {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('../img/UWCampus.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../img/UWCampus.jpg');
     background-size: cover;
     background-position: center;
-    
+
 }
 
 .sign-in-image {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('../img/SuzzOutside.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('../img/SuzzOutside.jpg');
     background-size: cover;
     background-position: center;
+}
+
+.progress {
+    height: 20px;
+}
+
+.progress-bar {
+    width: 10%;
+}
+
+.wizard {
+    width: 50px;
 }
