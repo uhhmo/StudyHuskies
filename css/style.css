@@ -21,6 +21,7 @@ body {
 nav {
     background-color: #800080;
     padding: 10px;
+    flex-wrap: wrap;
 }
 
 nav ul {
@@ -34,7 +35,7 @@ nav ul {
 nav a {
     color: white;
     text-decoration: none;
-    padding-left: 10px;
+    
 }
 
 /* Header */
@@ -264,5 +265,4 @@ footer {
                 url('../img/SuzzOutside.jpg');
     background-size: cover;
     background-position: center;
-    height: 100vh;
 }

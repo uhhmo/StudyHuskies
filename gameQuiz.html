@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="author" content="Momo">
     <meta name="description" content="Gamified quiz page for Study Huskies">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>quizGame</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <nav class="nav sticky-top">
+        <nav class="nav sticky-top d-flex justify-content-between">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="courses.html">Courses</a></li>
@@ -20,10 +23,13 @@
                 <li><a href="gameQuiz.html" class="active">Quiz</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
+            <ul class="d-flex justify-content-end">
+                <li><a href="signin.html">Sign In</a></li>
+            </ul>
         </nav>
     </header>
 
-     <main class="container my-5">
+    <main class="container my-5">
 
         <section class="mb-5 p-4 border rounded shadow-sm text-center">
             <h1>Game Quiz</h1>
@@ -67,7 +73,7 @@
                 <span>Question <strong>3 / 10</strong></span>
                 <span>⭐ Score: <strong>150</strong></span>
             </div>
-            
+
 
             <!-- example fill in the blank -->
             <div class="mb-4">
@@ -102,11 +108,12 @@
                 <a href="gameQuiz.html" class="btn btn-dark">Play Again</a>
             </div>
         </section>
-        
+
     </main>
 
     <footer>
         <p> INFO 340 Project - Winter 2026</p>
     </footer>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="author" content="Blake Perti">
@@ -7,16 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Sign in page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="../img/icon.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="sign-in-image d-flex justify-content-center align-items-center min-vh-100">
-    <main class="d-flex align-items-center">
-            <section class="p-4 border rounded shadow-sm bg-light">
+<body>
+    <div class="sign-in-image vh-100">
+        <header>
+            <nav class="nav sticky-top">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li><a href="flashcards.html">Flashcards</a></li>
+                    <li><a href="studying.html">Studying</a></li>
+                    <li><a href="gameQuiz.html">Quiz</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="row p-4 border rounded shadow-sm bg-light">
                 <h2 class="text-center">Sign In</h2>
-                <form class="">
+                <form class="align-items-center">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="email" placeholder="dubs@uw.edu">
@@ -28,5 +43,6 @@
                     <button type="submit" class="btn btn-home">Sign In</button>
                 </form>
             </section>
-    </main>
+        </main>
+    </div>
 </body>
