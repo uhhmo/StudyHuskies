@@ -34,7 +34,7 @@
 
         <section class="mb-5 p-4 border rounded shadow-sm text-center">
             <h1>Adventure Quiz</h1>
-            <p>Test your knowledge on an adventure! Expore with interactive flashcards, but be careful, 
+            <p>Test your knowledge on an adventure! Expore with interactive flashcards, but be careful,
                 get a question wrong and you'll be sent back to the checkpoint!.</p>
         </section>
 
@@ -42,6 +42,14 @@
             <h2>Select Adventure Mode</h2>
 
             <form>
+
+                <div class="mb-4">
+                    <label for="flashcardSet" class="form-label">Select Flashcard Set</label>
+                    <select class="form-select" id="flashcardSet">
+                        <option selected>Chose a set</option>
+                    </select>
+                </div>
+
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="quizMode" id="recallMode">
                     <label class="form-check-label" for="recallMode">
@@ -63,7 +71,13 @@
                     </label>
                 </div>
 
-                <button type="button" class="btn btn-dark">Start Quiz</button>
+                <div class="mb-4">
+                    <label for="livesCount" class="form-label">Number of Lives</label>
+                    <input type="number" class="form-control" id="livesCount">
+                    <div class="form-text">How many mistakes are allowed?</div>
+                </div>
+
+                <button type="button" class="btn btn-home">Start Quiz</button>
             </form>
         </section>
 
@@ -87,7 +101,7 @@
                 <input type="text" class="form-control mb-3" placeholder="Type your answer here">
             </div>
 
-            <button type="button" class="btn btn-dark">Submit Answer</button>
+            <button type="button" class="btn btn-home">Submit Answer</button>
         </section>
 
         <div class="container text-center p-4">
