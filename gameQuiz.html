@@ -6,7 +6,7 @@
     <meta name="author" content="Momo">
     <meta name="description" content="Gamified quiz page for Study Huskies">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <title>quizGame</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -16,12 +16,13 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #800080;">
+        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #800080;" aria-label="Main navigation">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
@@ -42,14 +43,21 @@
     <main class="container my-5">
 
         <section class="mb-5 p-4 border rounded shadow-sm text-center">
-            <h1>Game Quiz</h1>
-            <p>Test your knowledge with timed, interactive challenges.</p>
+            <h1>Adventure Quiz</h1>
+            <p>Test your knowledge on an adventure! Expore with interactive flashcards, but be careful,
+                get a question wrong and you'll be sent back to the checkpoint!.</p>
         </section>
 
         <section class="mb-5 p-4 border rounded shadow-sm">
-            <h2>Select Quiz Mode</h2>
+            <h2>Select Adventure Mode</h2>
 
             <form>
+                <div class="mb-4">
+                    <label for="flashcardSet" class="form-label">Select Flashcard Set</label>
+                    <select class="form-select" id="flashcardSet">
+                        <option selected>Chose a set</option>
+                    </select>
+                </div>
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="quizMode" id="recallMode">
                     <label class="form-check-label" for="recallMode">
@@ -71,7 +79,13 @@
                     </label>
                 </div>
 
-                <button type="button" class="btn btn-dark">Start Quiz</button>
+                <div class="mb-4">
+                    <label for="livesCount" class="form-label">Number of Lives</label>
+                    <input type="number" class="form-control" id="livesCount">
+                    <div class="form-text">How many mistakes are allowed?</div>
+                </div>
+
+                <button type="button" class="btn btn-home">Start Quiz</button>
             </form>
         </section>
 
@@ -82,6 +96,7 @@
                 <span> ⏱ Time Remaining: <strong>01:20</strong></span>
                 <span>Question <strong>3 / 10</strong></span>
                 <span>⭐ Score: <strong>150</strong></span>
+                <span> Lives: <strong>2</strong></span>
             </div>
 
 
@@ -94,16 +109,35 @@
                 <input type="text" class="form-control mb-3" placeholder="Type your answer here">
             </div>
 
-            <button type="button" class="btn btn-dark">Submit Answer</button>
+            <button type="button" class="btn btn-home">Submit Answer</button>
         </section>
+
+        <div class="container text-center p-4">
+            <div class="row">
+                <div class="col-2">
+                    <img src="../img/wizard.png" class="wizard" alt="The adventurer">
+                </div>
+            </div>
+
+            <div class="progress mt-2">
+                <div class="progress-bar bg-dark"></div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col">Start</div>
+                <div class="col">Checkpoint A</div>
+                <div class="col">Checkpoint B</div>
+                <div class="col">Goal!</div>
+            </div>
+        </div>
 
         <!-- example quiz scoreboard -->
         <section class="p-4 border rounded shadow-sm text-center">
-            <h2>Quiz Complete!</h2>
+            <h2>Adventure Complete!</h2>
 
             <p><strong>Final Score:</strong> 720</p>
             <p><strong>Accuracy:</strong> 80%</p>
-            <p><strong>Time Spent:</strong> 2:45</p>
+            <p><strong>Time Spent Adventuring:</strong> 2:45</p>
 
             <!-- reccomends which flashcards to review -->
             <h3 class="mt-4">Recommended Review</h3>
