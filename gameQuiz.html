@@ -16,26 +16,17 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #800080;" aria-label="Main navigation">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="courses.html">Courses</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="flashcards.html">Flashcards</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="studying.html">Studying</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="gameQuiz.html">Quiz</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="about.html">About</a></li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="signin.html">Sign In</a></li>
-                    </ul>
-                </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="flashcards.html">Flashcards</a></li>
+                <li><a href="studying.html">Studying</a></li>
+                <li><a href="gameQuiz.html">Quiz</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div>
+                <a href="signin.html" class="btn-home">Sign in</a>
             </div>
         </nav>
     </header>
@@ -91,17 +82,28 @@
 
         <section class="mb-5 p-4 border rounded shadow-sm">
             <h2>Adventure!</h2>
-
-            <!-- example multiple choice game -->
-            <div class="d-flex justify-content-between mb-3">
-                <span> ⏱ Time Remaining: <strong>01:20</strong></span>
-                <span>Question <strong>3 / 10</strong></span>
-                <span>⭐ Score: <strong>150</strong></span>
-                <span> Lives: <strong>2</strong></span>
+            
+            <div class="quiz-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">⏱</div>
+                    <div class="stat-label">Time Remaining:</div>
+                    <div class="stat-value">01:20</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Question</div>
+                    <div class="stat-value">3 / 10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-label">Score:</div>
+                    <div class="stat-value">150</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Lives:</div>
+                    <div class="stat-value">2</div>
+                </div>
             </div>
 
-
-            <!-- example fill in the blank -->
             <div class="mb-4">
                 <p class="fs-5">
                     The _____ Object Model allows JavaScript to interact with HTML documents.
@@ -125,29 +127,42 @@
             </div>
 
             <div class="row mt-2">
-                <div class="col">Start</div>
-                <div class="col">Checkpoint A</div>
-                <div class="col">Checkpoint B</div>
-                <div class="col">Goal!</div>
+                <div class="col">
+                    Start
+                </div>
+                <div class="col">
+                    Checkpoint A
+                </div>
+                <div class="col">
+                    Checkpoint B
+                </div>
+                <div class="col">
+                    Goal!
+                </div>
             </div>
         </div>
 
-        <!-- example quiz scoreboard -->
         <section class="p-4 border rounded shadow-sm text-center">
             <h2>Adventure Complete!</h2>
 
-            <p><strong>Final Score:</strong> 720</p>
-            <p><strong>Accuracy:</strong> 80%</p>
-            <p><strong>Time Spent Adventuring:</strong> 2:45</p>
+            <div class="score-item">
+                <div class="score-label">Final Score</div>
+                <div class="score-value">720</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Accuracy</div>
+                <div class="score-value">80%</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Time Spent Adventuring</div>
+                <div class="score-value">2:45</div> 
+            </div>
 
-            <!-- reccomends which flashcards to review -->
             <h3 class="mt-4">Recommended Review</h3>
             <ul class="list-unstyled">
                 <li>JavaScript Events</li>
                 <li>DOM Traversal</li>
             </ul>
-
-            <!-- links to restart game or review flashcards -->
             <div class="mt-3">
                 <a href="flashcards.html" class="btn btn-outline-dark me-2">Review Flashcards</a>
                 <a href="gameQuiz.html" class="btn btn-dark">Play Again</a>
