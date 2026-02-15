@@ -1,7 +1,10 @@
 import React from 'react';
+import SignInForm from '../components/SignInForm';
 
 function signin() {
-  return <h1>Sign In Page</h1>;
+  return (
+    <SignInForm/>
+  );
 }
 
 export default signin;
