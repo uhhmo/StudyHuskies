@@ -127,6 +127,9 @@ footer {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+
+    border: none;
+    cursor: pointer;
 }
 
 .btn-home:hover {
@@ -161,4 +164,15 @@ footer {
 .signin-card {
     width: 90%;
     max-width: 400px;
+}
+
+#setSelect {
+  margin-left: 8px;
+}
+
+.study-btn-row {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
