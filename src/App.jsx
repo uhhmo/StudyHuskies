@@ -8,6 +8,7 @@ import Quiz from './pages/Quiz';
 import About from './pages/About';
 import SignIn from './pages/SignIn';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
+       <Footer/>
     </Router>
   );
 }

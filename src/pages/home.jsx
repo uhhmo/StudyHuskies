@@ -13,7 +13,6 @@ function home() {
       <HomeSection/>
       <HomeLogo/>
       <HomeForm/>
-      <Footer/>
     </div>
   );
 }

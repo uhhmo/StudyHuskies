@@ -1,7 +1,10 @@
 import React from 'react';
+import AboutSection from '../components/AboutSection';
 
 function about() {
-  return <h1>About Page</h1>;
+  return (
+    <AboutSection/>
+  );
 }
 
 export default about;
