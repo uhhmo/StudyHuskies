@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function Studying() {
-  // sets (hard-coded for now)
   const info340 = [
     { q: "What is a semantic tag?", a: "A semantic tag describes the meaning of its content." },
     { q: "What does the <p> tag do?", a: "It creates a paragraph of text." },
@@ -23,8 +22,7 @@ function Studying() {
   const [setName, setSetName] = useState("INFO 340");
   const [cardIndex, setCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-
-  // pick which cards to show
+  
   let cards = info340;
   if (setName === "Midterm") {
     cards = midterm;
