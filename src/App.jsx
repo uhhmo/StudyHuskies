@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/home';
-import Courses from './pages/Courses';
-import Flashcards from './pages/Flashcards';
-import Studying from './pages/Studying';
-import Quiz from './pages/Quiz';
-import About from './pages/About';
-import SignIn from './pages/SignIn';
+import Courses from './pages/courses';
+import Flashcards from './pages/flashcards';
+import Studying from './pages/studying';
+import Quiz from './pages/quiz';
+import About from './pages/about';
+import SignIn from './pages/signin';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer';
 

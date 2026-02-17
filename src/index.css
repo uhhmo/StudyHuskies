@@ -88,6 +88,86 @@ input {
     font-size: 14px;
 }
 
+/* Courses Page */
+.courses-header {
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.add-course {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.add-course button {
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #800080;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.add-course button:hover {
+    background-color: #660066;
+}
+
+.add-course input {
+    padding: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 350px;
+    font-size: 1.1rem;
+}
+
+.courses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 951px;
+    margin: 0 auto;
+}
+
+.courses-list > p {
+    text-align: center;
+    width: 100%;
+    color: #666;
+    font-style: italic;
+    font-size: 1.3rem;
+}
+
+.course-card {
+    flex: 0 0 300px;
+    max-width: 300px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
+    cursor: pointer;
+}
+
+.course-card:hover {
+    background-color: #800080;
+    color: white;
+}
+
+.course-card h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.course-card p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
 /* Footer */
 footer {
     background-color: #f2f2f2;
@@ -95,7 +175,6 @@ footer {
     text-align: center;
     margin-top: 30px;
 }
-
 
 /* Blakes CSS */
 
