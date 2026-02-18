@@ -255,3 +255,25 @@ footer {
   gap: 12px;
   justify-content: center;
 }
+
+#courseSelect, #setSelect {
+  margin-left: 8px;
+}
+
+.study-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+
+    width: 520px;
+    height: 220px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 20px;
+    cursor: pointer;
+}
