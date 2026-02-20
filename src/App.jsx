@@ -1,6 +1,6 @@
 // ============================================================
 // App.jsx
-// Root component for the Study Huskies app.
+// root component for the Study Huskies app.
 // holds all shared course + card data in one place (state)
 // persists that data to localStorage so it survives page refreshes
 // passes data down to pages that need it as props

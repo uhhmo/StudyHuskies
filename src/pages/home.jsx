@@ -1,3 +1,6 @@
+// ============================================================
+// home.jsx
+// ============================================================
 import React from 'react';
 import HeroImage from '../components/HeroImage';
 import HomeSection from '../components/HomeSection';
