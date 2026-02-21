@@ -33,6 +33,7 @@ nav ul {
     padding-left: 20px;
     gap: 20px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 nav li {

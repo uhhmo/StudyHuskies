@@ -11,7 +11,7 @@ import Footer from '../components/Footer';
 
 function home() {
   return (
-    <div className="home-container">
+    <div>
       <HeroImage/>
       <HomeSection/>
       <HomeLogo/>
