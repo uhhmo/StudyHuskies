@@ -5,12 +5,6 @@
 // persists that data to localStorage so it survives page refreshes
 // passes data down to pages that need it as props
 // sets up client-side routing with react-router-dom
-//
-// Data flow:
-//   App.jsx 
-//     Courses   → can add/delete/rename courses and sets
-//     Flashcards → can add/edit/delete cards within a set
-//     Studying  → read-only, just displays the cards
 // ============================================================
 
 import React, { useState } from 'react'; 
@@ -57,13 +51,11 @@ const INITIAL_COURSES = [
   }
 ];
 
-// used by Flashcards and Studying which don't need the course structure
 function flattenSets(courses) {
   return courses.flatMap(c => c.flashcardSets);
 }
 
 
-// Load from localStorage if available, otherwise use defaults
 function loadCourses() {
   try {
     const saved = localStorage.getItem('studyHuskies_courses');
@@ -73,29 +65,21 @@ function loadCourses() {
   }
 }
 
-// Save to localStorage every time courses change
 function saveCourses(courses) {
   try {
     localStorage.setItem('studyHuskies_courses', JSON.stringify(courses));
   } catch {
-    // localStorage unavailable — changes will still work this session
   }
 }
 
 function App() {
-  //single shared state — all pages read/write from this
   const [courses, setCourses] = useState(INITIAL_COURSES);
-
-  //derived flat list of sets for Flashcards + Studying
   const sets = flattenSets(courses);
-
-  // wrap setCourses so every update also saves to localStorage
   function updateCourses(newCourses) {
     setCourses(newCourses);
     saveCourses(newCourses);
   }
 
-  //when Flashcards edits cards, this syncs the change back into courses and saves here
   function setSets(newSets) {
     const updated = courses.map(course => ({
       ...course,
