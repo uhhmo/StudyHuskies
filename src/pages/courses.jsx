@@ -15,11 +15,6 @@ function Courses({ courses, setCourses }) {
   const [addingSetForCourse, setAddingSetForCourse] = useState(null);
   const [newSetName, setNewSetName] = useState('');
 
-
-  // ----------------------------------------------------------
-  // Course Actions
-  // ----------------------------------------------------------
-
   function addCourse() {
     if (!newCourseName.trim()) { alert('Please enter a course name'); return; }
     const newCourse = { id: Date.now(), name: newCourseName.trim(), flashcardSets: [] };
@@ -40,11 +35,6 @@ function Courses({ courses, setCourses }) {
     setEditingCourseId(null);
   }
 
-
-  // ----------------------------------------------------------
-  // Set Actions
-  // ----------------------------------------------------------
-
   function addSet(courseId) {
     if (!newSetName.trim()) return;
     const newSet = { id: Date.now(), name: newSetName.trim(), cards: [] };
@@ -63,17 +53,9 @@ function Courses({ courses, setCourses }) {
     ));
   }
 
-
-  // ----------------------------------------------------------
-  // Render
-  // ----------------------------------------------------------
-
   return (
     <main>
-      {/* Page header */}
       <h1 className="courses-header">My Courses</h1>
-
-      {/* Add course — centered below header */}
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
         {!showInput ? (
           <button className="btn-home" onClick={() => setShowInput(true)}>+ Add Course</button>
@@ -95,7 +77,6 @@ function Courses({ courses, setCourses }) {
         )}
       </div>
 
-      {/* Section heading + course grid */}
       <div className="courses-container">
         <section>
           <h2>Select a course to view your flashcard sets</h2>
@@ -108,8 +89,6 @@ function Courses({ courses, setCourses }) {
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px" }}>
               {courses.map(course => (
                 <div key={course.id} style={{ width: "220px", flexShrink: 0 }}>
-
-                  {/* ---- Rename form ---- */}
                   {editingCourseId === course.id ? (
                     <div className="course-card" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       <input
@@ -137,7 +116,6 @@ function Courses({ courses, setCourses }) {
                     </div>
 
                   ) : (
-                    /* ---- Normal course card ---- */
                     <div
                       className="course-card"
                       style={{ cursor: 'pointer', marginBottom: '6px' }}
@@ -167,7 +145,6 @@ function Courses({ courses, setCourses }) {
                     </div>
                   )}
 
-                  {/* ---- Expanded sets panel ---- */}
                   {expandedCourseId === course.id && (
                     <div style={{
                       background: '#f9f0f9',
@@ -210,7 +187,6 @@ function Courses({ courses, setCourses }) {
                         ))
                       )}
 
-                      {/* Add set form */}
                       {addingSetForCourse === course.id ? (
                         <div style={{ display: 'flex', gap: '5px', marginTop: '6px' }}>
                           <input
