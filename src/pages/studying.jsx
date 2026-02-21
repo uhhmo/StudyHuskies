@@ -3,51 +3,8 @@
 // ============================================================
 import React, { useState } from "react";
 
-function Studying() {
-  const courses = [
-    {
-      name: "INFO 340",
-      sets: [
-        {
-          name: "Midterm",
-          cards: [
-            { q: "What is a semantic tag?", a: "A semantic tag describes the meaning of its content." },
-            { q: "What does the <p> tag do?", a: "It creates a paragraph of text." },
-            { q: "What does CSS control?", a: "CSS controls layout and styling." }
-          ]
-        },
-        {
-          name: "Final",
-          cards: [
-            { q: "What is routing?", a: "It lets your app show different pages without reloading." },
-            { q: "What is state?", a: "State stores values that can change and update the UI." },
-            { q: "Why use .map()?", a: "To show repeated elements from an array." }
-          ]
-        }
-      ]
-    },
-    {
-      name: "INFO 201",
-      sets: [
-        {
-          name: "Midterm",
-          cards: [
-            { q: "What is R?", a: "A programming language used a lot for data and stats." },
-            { q: "What does c() do?", a: "Combines values into a vector." },
-            { q: "What is a vector?", a: "A list of values (usually the same type)." }
-          ]
-        },
-        {
-          name: "Final",
-          cards: [
-            { q: "What is a data frame?", a: "A table of rows and columns in R." },
-            { q: "What does summary() do?", a: "Gives basic summary stats for data." },
-            { q: "What is ggplot used for?", a: "Making charts/graphs." }
-          ]
-        }
-      ]
-    }
-  ];
+function Studying({ courses }) {
+  
 
   const [courseIndex, setCourseIndex] = useState(0);
   const [setIndex, setSetIndex] = useState(0);
@@ -55,7 +12,7 @@ function Studying() {
   const [flipped, setFlipped] = useState(false);
 
   const currentCourse = courses[courseIndex];
-  const currentSet = currentCourse.sets[setIndex];
+  const currentSet = currentCourse.flashcardSets[setIndex];
   const currentCard = currentSet.cards[cardIndex];
 
   function changeCourse(e) {
@@ -74,8 +31,8 @@ function Studying() {
   function changeSet(e) {
     const picked = e.target.value;
 
-    for (let i = 0; i < currentCourse.sets.length; i++) {
-      if (currentCourse.sets[i].name === picked) {
+    for (let i = 0; i < currentCourse.flashcardSets.length; i++) {
+      if (currentCourse.flashcardSets[i].name === picked) {
         setSetIndex(i);
         setCardIndex(0);
         setFlipped(false);
@@ -124,7 +81,7 @@ function Studying() {
 
         <label htmlFor="setSelect">Choose a set</label>
         <select id="setSelect" value={currentSet.name} onChange={changeSet}>
-          {currentCourse.sets.map((s) => (
+          {currentCourse.flashcardSets.map((s) => (
             <option key={s.name}>{s.name}</option>
           ))}
         </select>

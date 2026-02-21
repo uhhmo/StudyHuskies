@@ -114,7 +114,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/courses"    element={<Courses   courses={courses} setCourses={setCourses} />} />
         <Route path="/flashcards" element={<Flashcards sets={sets} setSets={setSets} />} />
-        <Route path="/studying"   element={<Studying  sets={sets} />} />
+        <Route path="/studying"   element={<Studying  courses={courses} />} />
         <Route path="/quiz"    element={<Quiz />} />
         <Route path="/about"   element={<About />} />
         <Route path="/signin"  element={<SignIn />} />
