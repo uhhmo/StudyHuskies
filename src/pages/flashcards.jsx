@@ -19,11 +19,6 @@ function Flashcards({ sets = [], setSets = () => {} }) {
 
   const activeSet = sets.find(s => s.id === activeSetId);
 
-
-  // ----------------------------------------------------------
-  // Card Actions
-  // ----------------------------------------------------------
-
   function addCard() {
     if (!newQ.trim() || !newA.trim()) return;
     setSets(sets.map(s =>
@@ -58,11 +53,6 @@ function Flashcards({ sets = [], setSets = () => {} }) {
     setEditingCardId(null);
   }
 
-
-  // ----------------------------------------------------------
-  // Render
-  // ----------------------------------------------------------
-
   if (sets.length === 0) {
     return (
       <main>
@@ -83,7 +73,7 @@ function Flashcards({ sets = [], setSets = () => {} }) {
 
       <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
 
-        {/* ---- Sidebar: all sets, read-only ---- */}
+        
         <aside style={{ width: '200px', flexShrink: 0 }}>
           <h3 style={{ margin: '0 0 4px' }}>My Sets</h3>
           <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>
@@ -115,7 +105,7 @@ function Flashcards({ sets = [], setSets = () => {} }) {
           ))}
         </aside>
 
-        {/* ---- Main panel: cards in the active set ---- */}
+        
         {activeSet ? (
           <section style={{ flex: 1, minWidth: 0, maxWidth: '680px' }}>
             <h2 style={{ marginTop: 0 }}>{activeSet.name}</h2>
@@ -128,7 +118,7 @@ function Flashcards({ sets = [], setSets = () => {} }) {
               + Add Card
             </button>
 
-            {/* Add card form */}
+            
             {addingCard && (
               <div style={{ background: '#f9f0f9', border: '1px dashed #800080', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
                 <label>Question</label>
@@ -153,7 +143,6 @@ function Flashcards({ sets = [], setSets = () => {} }) {
               </div>
             )}
 
-            {/* Empty state */}
             {activeSet.cards.length === 0 ? (
               <p style={{ color: '#888' }}>No cards yet — add your first one above!</p>
             ) : (
@@ -161,7 +150,6 @@ function Flashcards({ sets = [], setSets = () => {} }) {
                 {activeSet.cards.map((card, idx) => (
                   <article key={card.id} className="study-card">
 
-                    {/* Inline edit form */}
                     {editingCardId === card.id ? (
                       <div>
                         <label>Question</label>
