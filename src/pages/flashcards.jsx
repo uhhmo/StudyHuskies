@@ -71,7 +71,7 @@ function Flashcards({ sets = [], setSets = () => {} }) {
       <h2>Flashcards</h2>
       <p>Select a set to add or edit its cards.</p>
 
-      <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
+      <div className="d-flex flex-column flex-md-row" style={{gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
 
         
         <aside style={{ width: '200px', flexShrink: 0 }}>
