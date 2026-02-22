@@ -72,14 +72,14 @@ function Courses({ courses, setCourses }) {
               autoFocus
             />
             <button className="btn-home" onClick={addCourse}>Add</button>
-            <button onClick={() => { setShowInput(false); setNewCourseName(''); }}>Cancel</button>
+            <button className="btn-home" onClick={() => { setShowInput(false); setNewCourseName(''); }}>Cancel</button>
           </div>
         )}
       </div>
 
       <div className="courses-container">
         <section>
-          <h2>Select a course to view your flashcard sets</h2>
+          <h2 className="courses-header">Select a course to view your flashcard sets!</h2>
 
           {courses.length === 0 ? (
             <p style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>

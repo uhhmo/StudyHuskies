@@ -33,7 +33,7 @@ nav ul {
     padding-left: 20px;
     gap: 20px;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 nav li {
@@ -50,6 +50,25 @@ nav a {
 nav .btn-home {
     padding: 8px 20px;
     margin-right: 20px;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        padding-left: 0;
+        gap: 2px;
+    }
+
+    nav a {
+        padding: 6px 4px;
+        font-size: 12px;
+    }
+
+    nav .btn-home {
+        padding: 6px 10px;
+        margin-right: 8px;
+        font-size: 12px;
+    }
 }
 
 /* Header */
