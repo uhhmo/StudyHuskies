@@ -7,17 +7,20 @@
 // sets up client-side routing with react-router-dom
 // ============================================================
 
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/home';
 import Courses from './pages/courses';
 import Flashcards from './pages/flashcards';
 import Studying from './pages/studying';
-import Quiz from './pages/quiz';
+import Quiz from './pages/Quiz';
+import QuizMode from './components/QuizMode';
+import QuizActive from './components/QuizActive';
 import About from './pages/about';
 import SignIn from './pages/signin';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router';
 import Footer from './components/Footer';
+import QuizReview from './components/QuizReview';
 
 const INITIAL_COURSES = [
   {
@@ -75,6 +78,8 @@ function saveCourses(courses) {
 function App() {
   const [courses, setCourses] = useState(INITIAL_COURSES);
   const sets = flattenSets(courses);
+  const [lives, setLives] = useState(3);
+
   function updateCourses(newCourses) {
     setCourses(newCourses);
     saveCourses(newCourses);
@@ -92,19 +97,24 @@ function App() {
   }
 
   return (
-    <Router>
-      <Navbar/>
+    <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses"    element={<Courses   courses={courses} setCourses={setCourses} />} />
+        <Route path="/courses" element={<Courses courses={courses} setCourses={setCourses} />} />
         <Route path="/flashcards" element={<Flashcards sets={sets} setSets={setSets} />} />
-        <Route path="/studying"   element={<Studying  courses={courses} />} />
-        <Route path="/quiz"    element={<Quiz />} />
-        <Route path="/about"   element={<About />} />
-        <Route path="/signin"  element={<SignIn />} />
+        <Route path="/studying" element={<Studying courses={courses} />} />
+        
+        <Route path="/Quiz" element={<Quiz sets={courses} />}>
+          <Route index element={<QuizMode sets={sets} setLives={setLives} />} />
+          <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />
+          <Route path=":setId/results" element={<QuizReview />} />
+        </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
-      <Footer/>
-    </Router>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

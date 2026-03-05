@@ -1,9 +1,20 @@
 import React from 'react';
+import wizard from '../assets/wizard.png';
 
-function ProgressBar() {
+function ProgressBar(props) {
+  const widthPercent = (props.current / props.total) * 100;
+
+
+  // IDK HOW TO MAKE THE WIZARD MOVE PLS HELP
   return (
-     <div class="progress mt-2">
-                <div class="progress-bar bg-dark"></div>
+    <div>
+      <img src={wizard} className="wizard" style={{ right: + "px"}}/>
+      <div className="progress mt-2">
+        <div
+          className="progress-bar bg-dark"
+          style={{ width: widthPercent + "%" }}
+        ></div>
+      </div>
     </div>
   );
 }

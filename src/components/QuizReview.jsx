@@ -1,31 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router';
 
-function QuizReview() {
+function QuizReview(props) {
+
     return (
-        <section class="p-4 border rounded shadow-sm text-center">
+        <section className="p-4 border rounded shadow-sm text-center">
             <h2>Adventure Complete!</h2>
 
-            <div class="score-item">
+            <div className="score-item">
                 <div class="score-label">Final Score</div>
-                <div class="score-value">720</div>
+                <div class="score-value">{props.totalCorrect}</div>
             </div>
-            <div class="score-item">
+            <div className="score-item">
                 <div class="score-label">Accuracy</div>
                 <div class="score-value">80%</div>
             </div>
-            <div class="score-item">
-                <div class="score-label">Time Spent Adventuring</div>
-                <div class="score-value">2:45</div>
-            </div>
 
-            <h3 class="mt-4">Recommended Review</h3>
-            <ul class="list-unstyled">
+            <h3 className="mt-4">Recommended Review</h3>
+            <ul className="list-unstyled">
                 <li>JavaScript Events</li>
                 <li>DOM Traversal</li>
             </ul>
-            <div class="mt-3">
-                <a href="flashcards.html" class="btn btn-outline-dark me-2">Review Flashcards</a>
-                <a href="gameQuiz.html" class="btn btn-dark">Play Again</a>
+            <div className="mt-3">
+                <Link to="/flashcards" className="btn btn-outline-dark me-2">Review Flashcards</Link>
+                <Link to="/Quiz" className="btn btn-dark">Play Again</Link>
             </div>
         </section>
     );
