@@ -7,7 +7,7 @@ import QuizReview from '../components/QuizReview';
 import QuizStats from '../components/QuizStats';
 import wizard from '../assets/wizard.png';
 import QuizMode from '../components/QuizMode';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
 
 
 function Quiz() {

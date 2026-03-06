@@ -13,12 +13,12 @@ import Home from './pages/home';
 import Courses from './pages/courses';
 import Flashcards from './pages/flashcards';
 import Studying from './pages/studying';
-import Quiz from './pages/Quiz';
+import Quiz from './pages/quiz';
 import QuizMode from './components/QuizMode';
 import QuizActive from './components/QuizActive';
 import About from './pages/about';
 import SignIn from './pages/signin';
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Footer from './components/Footer';
 import QuizReview from './components/QuizReview';
 
@@ -106,7 +106,7 @@ function App() {
         <Route path="/studying" element={<Studying courses={courses} />} />
         
         <Route path="/Quiz" element={<Quiz sets={courses} />}>
-          <Route index element={<QuizMode sets={sets} setLives={setLives} />} />
+          <Route index element={<QuizMode sets={sets} lives={lives} setLives={setLives} />} />
           <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />
           <Route path=":setId/results" element={<QuizReview />} />
         </Route>

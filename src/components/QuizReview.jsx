@@ -1,7 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router-dom';
 
 function QuizReview(props) {
+
+    const location = useLocation();
+    const quizData = location.state;
+
+    const totalCorrect = quizData ? quizData.totalCorrect : 0;
+    const totalAttempts = quizData ? quizData.totalAttempts : 0;
+    const totalQuestions = quizData ? quizData.totalQuestions : 0;
+    const missedCards = quizData ? quizData.missedCards : [];
+
+    let accuracy = 0;
+
+    if (totalAttempts > 0) {
+        accuracy = Math.round((totalCorrect / totalAttempts) * 100);
+    }
 
     return (
         <section className="p-4 border rounded shadow-sm text-center">
@@ -9,17 +23,22 @@ function QuizReview(props) {
 
             <div className="score-item">
                 <div class="score-label">Final Score</div>
-                <div class="score-value">{props.totalCorrect}</div>
+                <div className="score-value">{totalCorrect} / {totalQuestions}</div>
             </div>
             <div className="score-item">
                 <div class="score-label">Accuracy</div>
-                <div class="score-value">80%</div>
+                <div className="score-value">{accuracy}%</div>
             </div>
 
             <h3 className="mt-4">Recommended Review</h3>
             <ul className="list-unstyled">
-                <li>JavaScript Events</li>
-                <li>DOM Traversal</li>
+                {missedCards.length === 0 ? (
+                    <li>No missed cards. Nice job!</li>
+                ) : (
+                    missedCards.map(card => (
+                        <li key={card.id}>{card.q}</li>
+                    ))
+                )}
             </ul>
             <div className="mt-3">
                 <Link to="/flashcards" className="btn btn-outline-dark me-2">Review Flashcards</Link>

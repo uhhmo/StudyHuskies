@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router-dom';
 import QuizStats from './QuizStats';
 import ProgressBar from './ProgressBar';
 
 function QuizActive(props) {
     const params = useParams();
+    const navigate = useNavigate();
 
 
     const [currentId, setcurrentId] = useState(0);
@@ -12,8 +13,10 @@ function QuizActive(props) {
     const [userInput, setUserInput] = useState("");
     const [currentInfo, setCurrentInfo] = useState("Lets Adventure!");
 
-    const [totalCorrect, setTotalCorrect] = useState("0");
-    const [totalAttempts, setTotalAttempts] = useState("0");
+    const [totalCorrect, setTotalCorrect] = useState(0);
+    const [totalAttempts, setTotalAttempts] = useState(0);
+
+    const [missedCards, setMissedCards] = useState([]);
 
     const setId = params.setId;
     let currentSet = null;
@@ -36,42 +39,57 @@ function QuizActive(props) {
         }
     }
 
+    if (!currentSet || !currentSet.cards || currentSet.cards.length === 0) {
+    return <p>No cards found for this set.</p>;
+    }
+
     const cards = currentSet.cards;
 
     const handleAnswer = function () {
         const correctAnswer = cards[currentId].a.toLowerCase();
         const userAnswer = userInput.toLowerCase();
-
+        
         if (userAnswer === correctAnswer) {
-
             const nextIndex = currentId + 1;
-
+            const newCorrect = totalCorrect + 1;
+            const newAttempts = totalAttempts + 1;
             if (nextIndex % 2 === 0) {
                 setCheckpoint(nextIndex);
             }
-
+            
             if (nextIndex >= cards.length) {
-                // WE NEED TO NAVIGATE TO QUIZ REVIEW HERE (this is when they win)
-                // SOME HOW NEED TO GIVE THEM ALL THE STATISTICS + THE QUESTIONS THEY MISSED
-
+                navigate(`/quiz/${setId}/results`, {
+                    state: {
+                        totalCorrect: newCorrect,
+                        totalAttempts: newAttempts,
+                        totalQuestions: cards.length,
+                        missedCards: missedCards
+                    }
+                });
             } else {
-                if(currentInfo != "Wrong! Sending you back to the checkpoint.") {
-                    setTotalCorrect(totalCorrect + 1);
-                }
+                setTotalCorrect(newCorrect);
+                setTotalAttempts(newAttempts);
                 setcurrentId(nextIndex);
                 setCurrentInfo("Correct! Great job!");
-                setTotalAttempts(totalAttempts + 1);
             }
         } else {
-
             const remainingLives = props.lives - 1;
-
+            const newAttempts = totalAttempts + 1;
+            const updatedMissedCards = [...missedCards, cards[currentId]];
+            setMissedCards(updatedMissedCards);
+            
             if (remainingLives <= 0) {
-                //WE NEED TO NAVIGATE TO QUIZ REVIEW HERE (this is when they loose)
-                // SOME HOW NEED TO GIVE THEM ALL THE STATISTICS + THE QUESTIONS THEY MISSED
-
+                navigate(`/quiz/${setId}/results`, {
+                    state: {
+                        totalCorrect: totalCorrect,
+                        totalAttempts: newAttempts,
+                        totalQuestions: cards.length,
+                        missedCards: updatedMissedCards
+                    }
+                });
             } else {
                 props.setLives(remainingLives);
+                setTotalAttempts(newAttempts);
                 setCurrentInfo("Wrong! Sending you back to the checkpoint.");
                 setcurrentId(checkpoint);
             }

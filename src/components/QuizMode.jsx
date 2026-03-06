@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 function QuizMode(props) {
 
@@ -9,6 +9,7 @@ function QuizMode(props) {
 
     const handleStart = () => {
         if (selectedSet) {
+            props.setLives(Number(props.lives) || 3);
             navigate(`/quiz/${selectedSet}`);
         }
     };
@@ -34,7 +35,7 @@ function QuizMode(props) {
 
             <div class="mb-4">
                 <label for="livesCount" className="form-label">Number of Lives</label>
-                <input type="number" className="form-control" onChange={(e) => props.setLives(e.target.value)}/>
+                <input type="number" className="form-control" onChange={(e) => props.setLives(Number(e.target.value))}/>
                 <div class="form-text">How many mistakes are allowed?</div>
             </div>
 
