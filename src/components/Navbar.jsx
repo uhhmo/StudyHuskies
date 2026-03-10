@@ -1,7 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
 
-function Navbar() {
+function Navbar({ currentUser, auth }) {
+
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    navigate('/signin');
+  };
+
   return (
     <nav className="nav">
       <ul>
@@ -13,7 +22,13 @@ function Navbar() {
         <li><Link to="/about">About</Link></li>
       </ul>
       <div>
-        <Link to="/signin" className="btn-home">Sign in</Link>
+        {currentUser ? (
+          <button onClick={handleSignOut} className="btn-home">
+            Sign Out
+          </button>
+        ) : (
+          <Link to="/signin" className="btn-home">Sign In</Link>
+        )}
       </div>
     </nav>
   );

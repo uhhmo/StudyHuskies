@@ -25,6 +25,7 @@ import { ref, onValue, set } from 'firebase/database';
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { firebaseConfig } from '../firebase-config';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 
 function flattenSets(courses) {
@@ -33,19 +34,37 @@ function flattenSets(courses) {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth();
 
 function App() {
   const [courses, setCourses] = useState([]);
   const [lives, setLives] = useState(3);
   const sets = flattenSets(courses);
   const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const userId = "USER_ID_1"; // THIS IS WHAT WE NEED TO CHANGE FOR USER AUTH
 
+
+  useEffect(() => {
+    const unregisterFunction = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setCurrentUser(firebaseUser);
+      }
+      else {
+        setCurrentUser(null);
+      }
+      setLoading(false);
+    });
+    return () => unregisterFunction();
+  }, [auth]);
 
   // ok guys this is what we replaced load courses w/ per the ta help (bless up thank you ta)
   useEffect(() => {
-    const coursesRef = ref(db, `users/${userId}/courses`);
+    if (!currentUser) {
+      return
+    }
+
+    const coursesRef = ref(db, `users/${currentUser.uid}/courses`);
 
     const unregisterFunction = onValue(coursesRef, (snapshot) => {
       const data = snapshot.val();
@@ -69,12 +88,12 @@ function App() {
     });
 
     return () => unregisterFunction();
-  }, []);
+  }, [currentUser]);
 
   // this is the updared async save courses per ta thx!!
   async function saveCourses(newCourses) {
     try {
-      await set(ref(db, `users/${userId}/courses`), newCourses);
+      await set(ref(db, `users/${currentUser.uid}/courses`), newCourses);
     } catch (error) {
       console.error("wromp womp", error);
     }
@@ -103,7 +122,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar currentUser={currentUser} auth={auth}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/courses" element={<Courses courses={courses} setCourses={updateCourses} />} />
