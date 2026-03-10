@@ -7,7 +7,7 @@
 // sets up client-side routing with react-router-dom
 // ============================================================
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/home';
 import Courses from './pages/courses';
@@ -21,74 +21,74 @@ import SignIn from './pages/signin';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Footer from './components/Footer';
 import QuizReview from './components/QuizReview';
+import { ref, onValue, set } from 'firebase/database';
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import { firebaseConfig } from '../firebase-config';
 
-const INITIAL_COURSES = [
-  {
-    id: 1,
-    name: 'INFO 340',
-    flashcardSets: [
-      {
-        id: 101,
-        name: 'INFO 340 Midterm',
-        cards: [
-          { id: 1, q: 'What is a semantic tag?', a: 'A tag that describes the meaning of its content.' },
-          { id: 2, q: 'What does CSS control?', a: 'Layout and styling of a page.' },
-          { id: 3, q: 'What does the <p> tag do?', a: 'It creates a paragraph of text.' },
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'INFO 201',
-    flashcardSets: [
-      {
-        id: 201,
-        name: 'INFO 201 Midterm',
-        cards: [
-          { id: 1, q: 'What is R?', a: 'A programming language for data and stats.' },
-          { id: 2, q: 'What does c() do?', a: 'Combines values into a vector.' },
-        ]
-      }
-    ]
-  }
-];
 
 function flattenSets(courses) {
   return courses.flatMap(c => c.flashcardSets);
 }
 
-
-function loadCourses() {
-  try {
-    const saved = localStorage.getItem('studyHuskies_courses');
-    return saved ? JSON.parse(saved) : INITIAL_COURSES;
-  } catch {
-    return INITIAL_COURSES;
-  }
-}
-
-function saveCourses(courses) {
-  try {
-    localStorage.setItem('studyHuskies_courses', JSON.stringify(courses));
-  } catch {
-  }
-}
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 function App() {
-  const [courses, setCourses] = useState(INITIAL_COURSES);
-  const sets = flattenSets(courses);
+  const [courses, setCourses] = useState([]);
   const [lives, setLives] = useState(3);
+  const sets = flattenSets(courses);
+  const [loading, setLoading] = useState(true);
 
+  const userId = "USER_ID_1"; // THIS IS WHAT WE NEED TO CHANGE FOR USER AUTH
+
+
+  // ok guys this is what we replaced load courses w/ per the ta help (bless up thank you ta)
+  useEffect(() => {
+    const coursesRef = ref(db, `users/${userId}/courses`);
+
+    const unregisterFunction = onValue(coursesRef, (snapshot) => {
+      const data = snapshot.val();
+
+      let startArray = data;
+      if (!Array.isArray(data)) {
+        startArray = Object.values(data);
+      }
+
+
+      const toarray = startArray.map(course => ({
+        ...course,
+        flashcardSets: (course.flashcardSets || []).map(set => ({
+          ...set,
+          cards: set.cards || []
+        }))
+      }));
+
+      setCourses(toarray);
+      setLoading(false);
+    });
+
+    return () => unregisterFunction();
+  }, []);
+
+  // this is the updared async save courses per ta thx!!
+  async function saveCourses(newCourses) {
+    try {
+      await set(ref(db, `users/${userId}/courses`), newCourses);
+    } catch (error) {
+      console.error("wromp womp", error);
+    }
+  }
+
+  // this is pretty much the same
   function updateCourses(newCourses) {
-    setCourses(newCourses);
     saveCourses(newCourses);
   }
 
   function setSets(newSets) {
     const updated = courses.map(course => ({
       ...course,
-      flashcardSets: course.flashcardSets.map(set => {
+      flashcardSets: (course.flashcardSets || []).map(set => {
         const match = newSets.find(s => s.id === set.id);
         return match || set;
       })
@@ -96,15 +96,20 @@ function App() {
     updateCourses(updated);
   }
 
+  //lowk we could make this look better but someone else can do that
+  if (loading) {
+    return <div className="text-center">Loading Study Huskies!!</div>;
+  }
+
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses courses={courses} setCourses={setCourses} />} />
+        <Route path="/courses" element={<Courses courses={courses} setCourses={updateCourses} />} />
         <Route path="/flashcards" element={<Flashcards sets={sets} setSets={setSets} />} />
         <Route path="/studying" element={<Studying courses={courses} />} />
-        
+
         <Route path="/Quiz" element={<Quiz sets={courses} />}>
           <Route index element={<QuizMode sets={sets} lives={lives} setLives={setLives} />} />
           <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />

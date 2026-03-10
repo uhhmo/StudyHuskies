@@ -14,13 +14,17 @@ function QuizMode(props) {
         }
     };
 
+    if (!props.sets || props.sets.length === 0) {
+        return <div>Loading study sets!</div>;
+    }
+
     return (
 
         <section className="mb-5 p-4 border rounded shadow-sm">
             <h2>Select Adventure Mode</h2>
 
             <div className="mb-4">
-                <label for="flashcardSet" className="form-label">Select Flashcard Set</label>
+                <label htmlFor="flashcardSet" className="form-label">Select Flashcard Set</label>
                 <select
                     className="form-select"
                     value={selectedSet}
@@ -33,10 +37,10 @@ function QuizMode(props) {
                 </select>
             </div>
 
-            <div class="mb-4">
-                <label for="livesCount" className="form-label">Number of Lives</label>
-                <input type="number" className="form-control" onChange={(e) => props.setLives(Number(e.target.value))}/>
-                <div class="form-text">How many mistakes are allowed?</div>
+            <div className="mb-4">
+                <label htmlFor="livesCount" className="form-label">Number of Lives</label>
+                <input type="number" className="form-control" onChange={(e) => props.setLives(Number(e.target.value))} />
+                <div className="form-text">How many mistakes are allowed?</div>
             </div>
 
             <button onClick={handleStart} className="btn btn-home mt-3">Start Quiz</button>

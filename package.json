@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
-    "firebase-tools": "^15.6.0",
+    "firebase": "^12.10.0",
+    "firebase-tools": "^15.9.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0"

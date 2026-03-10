@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function HomeSection() {
   return (
-     <main class="container my-5">
+     <main className="container my-5">
       <section className="mb-5 p-4 border rounded shadow-sm text-center">
         <h2>Course Dashboard</h2>
         <p>Manage your courses flashcard sets.</p>
