@@ -18,7 +18,7 @@ import QuizMode from './components/QuizMode';
 import QuizActive from './components/QuizActive';
 import About from './pages/about';
 import SignIn from './pages/signin';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Navigate} from 'react-router';
 import Footer from './components/Footer';
 import QuizReview from './components/QuizReview';
 import { ref, onValue, set } from 'firebase/database';
@@ -125,11 +125,11 @@ function App() {
       <Navbar currentUser={currentUser} auth={auth}/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses courses={courses} setCourses={updateCourses} />} />
-        <Route path="/flashcards" element={<Flashcards sets={sets} setSets={setSets} />} />
-        <Route path="/studying" element={<Studying courses={courses} />} />
+        <Route path="/courses" element={currentUser ? (<Courses courses={courses} setCourses={updateCourses} />) : (<Navigate to="/signin"/>)} />
+        <Route path="/flashcards" element={currentUser ? (<Flashcards sets={sets} setSets={setSets} />) : (<Navigate to="/signin"/>)} />
+        <Route path="/studying" element={currentUser ? (<Studying courses={courses} />) :(<Navigate to="/signin"/>) } />
 
-        <Route path="/Quiz" element={<Quiz sets={courses} />}>
+        <Route path="/Quiz" element={currentUser ? (<Quiz sets={courses} />) : (<Navigate to="/signin"/>)}>
           <Route index element={<QuizMode sets={sets} lives={lives} setLives={setLives} />} />
           <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />
           <Route path=":setId/results" element={<QuizReview />} />
