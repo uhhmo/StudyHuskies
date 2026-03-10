@@ -308,6 +308,7 @@ footer {
 
 .wizard {
     width: 50px;
+    display: block;
 }
 
 @media (min-width: 768px) {

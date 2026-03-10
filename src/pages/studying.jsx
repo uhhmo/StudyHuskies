@@ -2,6 +2,7 @@
 // studying.jsx
 // ============================================================
 import React, { useState } from "react";
+import ProgressBar from "../components/ProgressBar";
 
 function Studying({ courses }) {
   
@@ -11,8 +12,39 @@ function Studying({ courses }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
 
+  if (courses.length === 0) {
+  return (
+    <main>
+      <section style={{ textAlign: "center" }}>
+        <h2>Studying</h2>
+        <p>No courses yet. Go add a course first.</p>
+      </section>
+    </main>
+  );
+}
+
   const currentCourse = courses[courseIndex];
+  if (currentCourse.flashcardSets.length === 0) {
+  return (
+    <main>
+      <section style={{ textAlign: "center" }}>
+        <h2>Studying</h2>
+        <p>This course has no flashcard sets yet.</p>
+      </section>
+    </main>
+  );
+}
   const currentSet = currentCourse.flashcardSets[setIndex];
+  if (currentSet.cards.length === 0) {
+  return (
+    <main>
+      <section style={{ textAlign: "center" }}>
+        <h2>Studying</h2>
+        <p>This set has no cards yet.</p>
+      </section>
+    </main>
+  );
+}
   const currentCard = currentSet.cards[cardIndex];
 
   function changeCourse(e) {
@@ -24,6 +56,7 @@ function Studying({ courses }) {
         setSetIndex(0);
         setCardIndex(0);
         setFlipped(false);
+        break;
       }
     }
   }
@@ -36,6 +69,7 @@ function Studying({ courses }) {
         setSetIndex(i);
         setCardIndex(0);
         setFlipped(false);
+        break;
       }
     }
   }
@@ -99,6 +133,9 @@ function Studying({ courses }) {
           <button className="btn-home" onClick={prevCard}>Prev</button>
           <button className="btn-home" onClick={flipCard}>Flip</button>
           <button className="btn-home" onClick={nextCard}>Next</button>
+        </div>
+        <div style={{ width: "520px", maxWidth: "100%", marginTop: "20px" }}>
+          <ProgressBar current={cardIndex} total={currentSet.cards.length} />
         </div>
       </section>
     </main>
