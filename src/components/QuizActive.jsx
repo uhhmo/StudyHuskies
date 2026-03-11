@@ -75,16 +75,17 @@ function QuizActive(props) {
         } else {
             const remainingLives = props.lives - 1;
             const newAttempts = totalAttempts + 1;
-            const updatedMissedCards = [...missedCards, cards[currentId]];
-            setMissedCards(updatedMissedCards);
-            
+            if(!missedCards.includes(cards[currentId])) {
+                const updatedMissedCards = [...missedCards, cards[currentId]];
+                setMissedCards(updatedMissedCards);
+            }
             if (remainingLives <= 0) {
                 navigate(`/quiz/${setId}/results`, {
                     state: {
                         totalCorrect: totalCorrect,
                         totalAttempts: newAttempts,
                         totalQuestions: cards.length,
-                        missedCards: updatedMissedCards
+                        missedCards: missedCards
                     }
                 });
             } else {

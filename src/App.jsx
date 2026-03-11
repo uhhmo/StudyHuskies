@@ -18,6 +18,7 @@ import QuizMode from './components/QuizMode';
 import QuizActive from './components/QuizActive';
 import About from './pages/about';
 import SignIn from './pages/signin';
+import MissedCards from './pages/MissedCards'
 import { Routes, Route, BrowserRouter, Navigate} from 'react-router';
 import Footer from './components/Footer';
 import QuizReview from './components/QuizReview';
@@ -42,6 +43,7 @@ function App() {
   const sets = flattenSets(courses);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [missedCards, setMissedCards] = useState([]);
 
 
 
@@ -65,6 +67,7 @@ function App() {
     }
 
     const coursesRef = ref(db, `users/${currentUser.uid}/courses`);
+    const missedRef = ref(db, `users/${currentUser.uid}/missedCards`)
 
     const unregisterFunction = onValue(coursesRef, (snapshot) => {
       const data = snapshot.val();
@@ -134,6 +137,7 @@ function App() {
           <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />
           <Route path=":setId/results" element={<QuizReview />} />
         </Route>
+        <Route path="/MissedCards" element={<MissedCards />} />
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>

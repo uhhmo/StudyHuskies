@@ -41,7 +41,7 @@ function QuizReview(props) {
                 )}
             </ul>
             <div className="mt-3">
-                <Link to="/flashcards" className="btn btn-outline-dark me-2">Review Flashcards</Link>
+                <Link to="/missedCards" className="btn btn-outline-dark me-2">Review Missed Flashcards</Link>
                 <Link to="/Quiz" className="btn btn-dark">Play Again</Link>
             </div>
         </section>
