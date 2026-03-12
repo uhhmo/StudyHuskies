@@ -26,7 +26,7 @@ function MissedCards(props) {
     }
 
     function handleAnswer() {
-        const correctAnswer = cards[currentId].a.toLowerCase();
+        const correctAnswer = currentCard.a.toLowerCase();
         const userAnswer = userInput.toLowerCase();
 
         if (userAnswer === correctAnswer) {
@@ -41,12 +41,24 @@ function MissedCards(props) {
     function handleDelete() {
         const updated = props.missedCards.filter(card => card.q !== currentCard.q);
         props.saveMissedCards(updated);
+        handleRandomCard();
     }
 
     function handleSkip() {
         setCurrentInfo("Skipped!");
-        const nextIndex = (currentId + 1) % cards.length;
-        setcurrentId(nextIndex);
+        handleRandomCard();
+    }
+
+    // this implementation could be WAYY more optimized if someone wants to do that :)
+    function handleRandomCard() {
+        let nextId = currentId;
+        while(currentId === nextId) {
+            nextId = Math.floor(Math.random() * cards.length);
+            if(cards.length <= 1) {
+                break;
+            }
+        }
+        setcurrentId(nextId);
     }
 
     if (!currentCard) {
