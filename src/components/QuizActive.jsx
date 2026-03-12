@@ -16,7 +16,7 @@ function QuizActive(props) {
     const [totalCorrect, setTotalCorrect] = useState(0);
     const [totalAttempts, setTotalAttempts] = useState(0);
 
-    const [missedCards, setMissedCards] = useState([]);
+    const [localMissedCards, setLocalMissedCards] = useState([]);
 
     const setId = params.setId;
     let currentSet = null;
@@ -63,7 +63,7 @@ function QuizActive(props) {
                         totalCorrect: newCorrect,
                         totalAttempts: newAttempts,
                         totalQuestions: cards.length,
-                        missedCards: missedCards
+                        localMissedCards: localMissedCards
                     }
                 });
             } else {
@@ -75,17 +75,22 @@ function QuizActive(props) {
         } else {
             const remainingLives = props.lives - 1;
             const newAttempts = totalAttempts + 1;
-            if(!missedCards.includes(cards[currentId])) {
-                const updatedMissedCards = [...missedCards, cards[currentId]];
-                setMissedCards(updatedMissedCards);
+
+            if(!localMissedCards.includes(cards[currentId])) {
+                const updatedLocalMissedCards = [...localMissedCards, cards[currentId]];
+                setLocalMissedCards(updatedLocalMissedCards);
+
+                const updatedMissedCards = [...props.missedCards, cards[currentId]];
+                props.saveMissedCards(updatedMissedCards);
             }
+
             if (remainingLives <= 0) {
                 navigate(`/quiz/${setId}/results`, {
                     state: {
                         totalCorrect: totalCorrect,
                         totalAttempts: newAttempts,
                         totalQuestions: cards.length,
-                        missedCards: missedCards
+                        localMissedCards: localMissedCards
                     }
                 });
             } else {

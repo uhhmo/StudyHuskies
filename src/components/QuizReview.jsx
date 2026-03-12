@@ -9,7 +9,7 @@ function QuizReview(props) {
     const totalCorrect = quizData ? quizData.totalCorrect : 0;
     const totalAttempts = quizData ? quizData.totalAttempts : 0;
     const totalQuestions = quizData ? quizData.totalQuestions : 0;
-    const missedCards = quizData ? quizData.missedCards : [];
+    const localMissedCards = quizData ? quizData.localMissedCards : [];
 
     let accuracy = 0;
 
@@ -32,10 +32,10 @@ function QuizReview(props) {
 
             <h3 className="mt-4">Recommended Review</h3>
             <ul className="list-unstyled">
-                {missedCards.length === 0 ? (
+                {localMissedCards.length === 0 ? (
                     <li>No missed cards. Nice job!</li>
                 ) : (
-                    missedCards.map(card => (
+                    localMissedCards.map(card => (
                         <li key={card.id}>{card.q}</li>
                     ))
                 )}
