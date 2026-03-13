@@ -151,7 +151,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    max-width: 960px;   /* max-width instead of fixed width so it works with mobile*/
+    width: 951px;  
     margin: 0 auto;
 }
 
