@@ -151,7 +151,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    width: 951px;
+    max-width: 960px;   /* max-width instead of fixed width so it works with mobile*/
     margin: 0 auto;
 }
 
@@ -321,5 +321,71 @@ footer {
 
     .study-card {
         width: 520px;;
+    }
+}
+
+/* cards grid layout in flashcards page */
+.cards-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+/* button row used in flashcards and courses edit forms */
+.button-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+/* quiz results score display */
+.score-item {
+    margin: 12px auto;
+    max-width: 300px;
+    background: #f9f0f9;
+    border: 1px solid #d4b0d4;
+    border-radius: 10px;
+    padding: 12px 20px;
+}
+
+.score-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.score-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #800080;
+}
+
+/* Responsive: courses grid on mobile */
+@media (max-width: 600px) {
+    .courses-list {
+        width: 100%;
+        padding: 0 12px;
+    }
+
+    .course-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .cards-grid {
+        flex-direction: column;
+    }
+
+    .study-card {
+        width: 100%;
+        height: auto;
+        min-height: 160px;
+    }
+
+    .quiz-stats .col {
+        font-size: 12px;
     }
 }
