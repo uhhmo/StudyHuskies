@@ -16,7 +16,7 @@ function Quiz() {
 
             <section className="mb-5 p-4 border rounded shadow-sm text-center">
                 <h1>Adventure Quiz</h1>
-                <p>Test your knowledge on an adventure! Expore with interactive flashcards, but be careful,
+                <p>Test your knowledge on an adventure! Explore with interactive flashcards, but be careful,
                     get a question wrong and you'll be sent back to the checkpoint!.</p>
             </section>
 

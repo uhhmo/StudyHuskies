@@ -137,8 +137,8 @@ function Flashcards({ sets = [], setSets = () => {} }) {
                   onChange={e => setNewA(e.target.value)}
                 />
                 <div className="button-row">
-                  <button className="btn-home" onClick={addCard}>Save</button>
-                  <button onClick={() => { setAddingCard(false); setNewQ(''); setNewA(''); }}>Cancel</button>
+                  <button type="button" className="btn-home" onClick={addCard}>Save</button>
+                  <button type="button" className="btn-home" onClick={() => { setAddingCard(false); setNewQ(''); setNewA(''); }}>Cancel</button>
                 </div>
               </div>
             )}
@@ -166,7 +166,7 @@ function Flashcards({ sets = [], setSets = () => {} }) {
                         />
                         <div className="button-row">
                           <button className="btn-home" onClick={() => saveCard(card.id)}>Save</button>
-                          <button onClick={() => setEditingCardId(null)}>Cancel</button>
+                          <button className="btn-home" onClick={() => setEditingCardId(null)}>Cancel</button>
                         </div>
                       </div>
                     ) : (
