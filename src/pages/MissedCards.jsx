@@ -16,7 +16,10 @@ function MissedCards(props) {
 
     if (cards.length === 0) {
         return (<main className='d-flex flex-column align-items-center gap-2'>
-            <p className="m-5">No missed cards! Great job!</p>
+            <div className="m-3 d-flex flex-column align-items-center ">
+                <p>You missed no cards during the adventure quiz!</p>
+                <p>Nothing to study - Great job!</p>
+            </div>
             <Link to='/studying' className="btn-home">Return to Studying</Link>
             <Link to='/quiz' className="btn-home">Return to Quiz</Link>
         </main>);
