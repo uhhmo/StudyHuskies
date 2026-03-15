@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import QuizStats from './QuizStats';
 import ProgressBar from './ProgressBar';
@@ -6,7 +6,6 @@ import ProgressBar from './ProgressBar';
 function QuizActive(props) {
     const params = useParams();
     const navigate = useNavigate();
-
 
     const [currentId, setcurrentId] = useState(0);
     const [checkpoint, setCheckpoint] = useState(0);
@@ -16,7 +15,19 @@ function QuizActive(props) {
     const [totalCorrect, setTotalCorrect] = useState(0);
     const [totalAttempts, setTotalAttempts] = useState(0);
 
-    const [missedCards, setMissedCards] = useState([]);
+    const [localMissedCards, setLocalMissedCards] = useState([]);
+    /** timer feature */
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const intervalRef = useRef(null);
+
+    // start the timer on mount, clear it on unmount
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setElapsedSeconds(prev => prev + 1);
+        }, 1000);
+
+        return () => clearInterval(intervalRef.current);
+    }, []);
 
     const setId = params.setId;
     let currentSet = null;
@@ -40,15 +51,29 @@ function QuizActive(props) {
     }
 
     if (!currentSet || !currentSet.cards || currentSet.cards.length === 0) {
-    return <p>No cards found for this set.</p>;
+        return <p>No cards found for this set.</p>;
     }
 
     const cards = currentSet.cards;
 
+    // Helper to stop the timer and navigate to results, passing elapsed time
+    function finishQuiz(finalCorrect, finalAttempts, missed) {
+        clearInterval(intervalRef.current);
+        navigate(`/quiz/${setId}/results`, {
+            state: {
+                totalCorrect: finalCorrect,
+                totalAttempts: finalAttempts,
+                totalQuestions: cards.length,
+                localMissedCards: missed,
+                elapsedSeconds: elapsedSeconds
+            }
+        });
+    }
+
     const handleAnswer = function () {
         const correctAnswer = cards[currentId].a.toLowerCase();
         const userAnswer = userInput.toLowerCase();
-        
+
         if (userAnswer === correctAnswer) {
             const nextIndex = currentId + 1;
             const newCorrect = totalCorrect + 1;
@@ -56,16 +81,9 @@ function QuizActive(props) {
             if (nextIndex % 2 === 0) {
                 setCheckpoint(nextIndex);
             }
-            
+
             if (nextIndex >= cards.length) {
-                navigate(`/quiz/${setId}/results`, {
-                    state: {
-                        totalCorrect: newCorrect,
-                        totalAttempts: newAttempts,
-                        totalQuestions: cards.length,
-                        missedCards: missedCards
-                    }
-                });
+                finishQuiz(newCorrect, newAttempts, localMissedCards);
             } else {
                 setTotalCorrect(newCorrect);
                 setTotalAttempts(newAttempts);
@@ -75,18 +93,17 @@ function QuizActive(props) {
         } else {
             const remainingLives = props.lives - 1;
             const newAttempts = totalAttempts + 1;
-            const updatedMissedCards = [...missedCards, cards[currentId]];
-            setMissedCards(updatedMissedCards);
-            
+
+            if(!localMissedCards.includes(cards[currentId])) {
+                const updatedLocalMissedCards = [...localMissedCards, cards[currentId]];
+                setLocalMissedCards(updatedLocalMissedCards);
+
+                const updatedMissedCards = [...props.missedCards, cards[currentId]];
+                props.saveMissedCards(updatedMissedCards);
+            }
+
             if (remainingLives <= 0) {
-                navigate(`/quiz/${setId}/results`, {
-                    state: {
-                        totalCorrect: totalCorrect,
-                        totalAttempts: newAttempts,
-                        totalQuestions: cards.length,
-                        missedCards: updatedMissedCards
-                    }
-                });
+                finishQuiz(totalCorrect, newAttempts, localMissedCards);
             } else {
                 props.setLives(remainingLives);
                 setTotalAttempts(newAttempts);
@@ -105,6 +122,7 @@ function QuizActive(props) {
                 total={cards.length}
                 lives={props.lives}
                 checkpoint={checkpoint}
+                elapsedSeconds={elapsedSeconds}
             />
 
             <div className="my-4">
@@ -118,6 +136,7 @@ function QuizActive(props) {
                     placeholder="Type your answer here"
                     value={userInput}
                     onChange={e => setUserInput(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && handleAnswer()}
                 />
 
                 <button type="button" className="btn btn-home" onClick={handleAnswer}>

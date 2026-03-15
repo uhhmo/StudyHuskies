@@ -18,7 +18,8 @@ import QuizMode from './components/QuizMode';
 import QuizActive from './components/QuizActive';
 import About from './pages/about';
 import SignIn from './pages/signin';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import MissedCards from './pages/MissedCards'
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router';
 import Footer from './components/Footer';
 import QuizReview from './components/QuizReview';
 import { ref, onValue, set } from 'firebase/database';
@@ -42,6 +43,7 @@ function App() {
   const sets = flattenSets(courses);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const [missedCards, setMissedCards] = useState([]);
 
 
 
@@ -61,7 +63,7 @@ function App() {
   // ok guys this is what we replaced load courses w/ per the ta help (bless up thank you ta)
   useEffect(() => {
     if (!currentUser) {
-      return
+      return;
     }
 
     const coursesRef = ref(db, `users/${currentUser.uid}/courses`);
@@ -115,6 +117,35 @@ function App() {
     updateCourses(updated);
   }
 
+  //this is all for the missed cards stuff now and pretty much copt paste from the above
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+
+    const missedRef = ref(db, `users/${currentUser.uid}/missedCards`);
+
+    const unregisterFunction = onValue(missedRef, (snapshot) => {
+      const data = snapshot.val() || [];
+      let loadMissedCards = data;
+
+      if (!Array.isArray(data)) {
+        loadMissedCards = Object.values(data);
+      }
+
+      setMissedCards(loadMissedCards);
+
+    });
+
+    return () => unregisterFunction();
+  }, [currentUser]);
+
+  async function saveMissedCards(newMissed) {
+    await set(ref(db, `users/${currentUser.uid}/missedCards`), newMissed);
+  }
+
+
   //lowk we could make this look better but someone else can do that
   if (loading) {
     return <div className="text-center">Loading Study Huskies!!</div>;
@@ -122,18 +153,19 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar currentUser={currentUser} auth={auth}/>
+      <Navbar currentUser={currentUser} auth={auth} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses courses={courses} setCourses={updateCourses} />} />
-        <Route path="/flashcards" element={<Flashcards sets={sets} setSets={setSets} />} />
-        <Route path="/studying" element={<Studying courses={courses} />} />
+        <Route path="/courses" element={currentUser ? (<Courses courses={courses} setCourses={updateCourses} />) : (<Navigate to="/signin" />)} />
+        <Route path="/flashcards" element={currentUser ? (<Flashcards sets={sets} setSets={setSets} courses={courses} />) : (<Navigate to="/signin" />)} />
+        <Route path="/studying" element={currentUser ? (<Studying courses={courses} />) : (<Navigate to="/signin" />)} />
 
-        <Route path="/Quiz" element={<Quiz sets={courses} />}>
+        <Route path="/Quiz" element={currentUser ? (<Quiz sets={courses} />) : (<Navigate to="/signin" />)}>
           <Route index element={<QuizMode sets={sets} lives={lives} setLives={setLives} />} />
-          <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} />} />
+          <Route path=":setId" element={<QuizActive sets={courses} lives={lives} setLives={setLives} missedCards={missedCards} saveMissedCards={saveMissedCards} />} />
           <Route path=":setId/results" element={<QuizReview />} />
         </Route>
+        <Route path="/MissedCards" element={<MissedCards saveMissedCards={saveMissedCards} missedCards={missedCards}/>} />
         <Route path="/about" element={<About />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>

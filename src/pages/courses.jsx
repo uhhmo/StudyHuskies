@@ -121,8 +121,8 @@ function Courses({ courses, setCourses }) {
                       style={{ cursor: 'pointer', marginBottom: '6px' }}
                       onClick={() => setExpandedCourseId(expandedCourseId === course.id ? null : course.id)}
                     >
-                      <h3 style={{ margin: '0 0 4px', fontSize: '16px' }}>{course.name}</h3>
-                      <p style={{ margin: '0 0 10px', fontSize: '13px', color: '#666' }}>
+                      <h3 style={{ margin: '0 0 4px', fontSize: '16px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{course.name}</h3>
+                      <p style={{ margin: '0 0 10px', fontSize: '13px' }}>
                         {course.flashcardSets.length} set{course.flashcardSets.length !== 1 ? 's' : ''}
                         {' '}· {course.flashcardSets.reduce((n, s) => n + s.cards.length, 0)} cards
                       </p>

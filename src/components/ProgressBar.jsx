@@ -2,26 +2,38 @@ import React from 'react';
 import wizard from '../assets/wizard.png';
 
 function ProgressBar(props) {
-  const widthPercent = ((props.current + 1) / props.total) * 100;
-  const wizardPosition = widthPercent;
 
+  const wizardPosition = (props.current / props.total) * 100;
 
-  // IDK HOW TO MAKE THE WIZARD MOVE PLS HELP
   return (
-    <div>
-      <div style={{ width: "100%" }}>
+    <div style={{ width: "100%", paddingBottom: "8px" }}>
+      
+      {/* Wizard track */}
+      <div style={{ position: "relative", width: "100%", height: "48px", marginBottom: "4px" }}>
         <img
           src={wizard}
           className="wizard"
-          style={{ marginLeft: wizardPosition + "%" }}
+          style={{
+            position: "absolute",
+            left: wizardPosition + "%",
+            bottom: 0,
+            transition: "left 0.5s ease",
+            height: "40px",
+          }}
         />
       </div>
-      <div className="progress mt-2">
+
+      {/* Progress bar */}
+      <div className="progress">
         <div
           className="progress-bar bg-dark"
-          style={{ width: widthPercent + "%" }}
-        ></div>
+          style={{
+            width: wizardPosition + "%",
+            transition: "width 0.5s ease",
+          }}
+        />
       </div>
+
     </div>
   );
 }

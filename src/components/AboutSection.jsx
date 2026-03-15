@@ -7,7 +7,7 @@ function AboutSection() {
         <main className="about-image p-5 container-fluid vh-100 p-0">
             <section className="mb-5 p-4 border rounded shadow-sm text-center bg-light">
                 <div className="text-center row">
-                    <img src={huskyIcon} alt="Husky Icon" class="rounded-circle mb-5 shadow-sm husky-image" />
+                    <img src={huskyIcon} alt="Husky Icon" className="rounded-circle mb-5 shadow-sm husky-image" />
                     <div>
                     </div>
                     <h2>About Us</h2>
