@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import huskyIcon from '../assets/icon.png';
 
-function AboutSection() {
+function AboutSection({currentUser}) {
     return (
         <main className="about-image p-5 container-fluid vh-100 p-0">
             <section className="mb-5 p-4 border rounded shadow-sm text-center bg-light">
@@ -22,7 +22,7 @@ function AboutSection() {
             </section>
 
             <div class="text-center">
-                <Link to="/" className="btn-home">Get Started</Link>
+                <Link to={currentUser ? ('/courses') : ('/signIn')} className="btn-home">Get Started</Link>
             </div>
 
         </main>

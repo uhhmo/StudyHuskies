@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router';
 import QuizStats from './QuizStats';
 import ProgressBar from './ProgressBar';
 
@@ -51,7 +51,9 @@ function QuizActive(props) {
     }
 
     if (!currentSet || !currentSet.cards || currentSet.cards.length === 0) {
-        return <p>No cards found for this set.</p>;
+        return (<div className='d-flex flex-column justify-content-center align-items-center'><p>No cards found for this set.</p>
+            <Link to='/quiz' className="btn-home">Return to Quiz</Link>
+        </div>)
     }
 
     const cards = currentSet.cards;
@@ -94,7 +96,7 @@ function QuizActive(props) {
             const remainingLives = props.lives - 1;
             const newAttempts = totalAttempts + 1;
 
-            if(!localMissedCards.includes(cards[currentId])) {
+            if (!localMissedCards.includes(cards[currentId])) {
                 const updatedLocalMissedCards = [...localMissedCards, cards[currentId]];
                 setLocalMissedCards(updatedLocalMissedCards);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate, Link } from 'react-router';
 
 
 // Guys i took most of this from studying + game quiz so its kinda a mash of the both which i think is cool
@@ -14,14 +14,11 @@ function MissedCards(props) {
 
     const currentCard = cards[currentId];
 
-    function handleReturnToStudy() {
-        navigate('/studying');
-    }
-
     if (cards.length === 0) {
-        return (<main className='d-flex flex-column align-items-center'>
+        return (<main className='d-flex flex-column align-items-center gap-2'>
             <p className="m-5">No missed cards! Great job!</p>
-            <button className="btn-home" onClick={handleReturnToStudy}>Return to Studying</button>
+            <Link to='/studying' className="btn-home">Return to Studying</Link>
+            <Link to='/quiz' className="btn-home">Return to Quiz</Link>
         </main>);
     }
 
@@ -52,9 +49,9 @@ function MissedCards(props) {
     // this implementation could be WAYY more optimized if someone wants to do that :)
     function handleRandomCard() {
         let nextId = currentId;
-        while(currentId === nextId) {
+        while (currentId === nextId) {
             nextId = Math.floor(Math.random() * cards.length);
-            if(cards.length <= 1) {
+            if (cards.length <= 1) {
                 break;
             }
         }
@@ -97,6 +94,10 @@ function MissedCards(props) {
                     </div>
                 </div>
             </section>
+            <div className='study-btn-row'>
+                <Link to='/studying' className="btn-home">Return to Studying</Link>
+                <Link to='/quiz' className="btn-home">Return to Quiz</Link>
+            </div>
         </main>
     );
 }

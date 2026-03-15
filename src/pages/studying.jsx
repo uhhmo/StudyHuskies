@@ -3,7 +3,6 @@
 // ============================================================
 import React, { useState } from "react";
 import { useNavigate } from 'react-router'
-import ProgressBar from "../components/ProgressBar";
 
 function Studying({ courses }) {
 

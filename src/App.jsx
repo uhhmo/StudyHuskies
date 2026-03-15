@@ -166,7 +166,7 @@ function App() {
           <Route path=":setId/results" element={<QuizReview />} />
         </Route>
         <Route path="/MissedCards" element={<MissedCards saveMissedCards={saveMissedCards} missedCards={missedCards}/>} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<About currentUser={currentUser}/>} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
       <Footer />

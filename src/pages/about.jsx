@@ -4,9 +4,9 @@
 import React from 'react';
 import AboutSection from '../components/AboutSection';
 
-function about() {
+function about({currentUser}) {
   return (
-    <AboutSection/>
+    <AboutSection currentUser={currentUser}/>
   );
 }
 
