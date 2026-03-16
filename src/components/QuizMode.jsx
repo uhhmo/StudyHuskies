@@ -5,16 +5,22 @@ import { useNavigate } from 'react-router';
 function QuizMode(props) {
 
     const [selectedSet, setSelectedSet] = useState("");
+    const [currentInfo, setCurrentInfo] = useState("Lets adventure!!");
     const navigate = useNavigate();
 
     const handleStart = () => {
         if (!selectedSet) {
-            alert("Please select a flashcard set first.");
+            setCurrentInfo("Please select a flashcard set first.");
             return;
         }
 
-        if (!props.lives || props.lives <= 0) {
-            alert("Please enter how many lives you want.");
+        if (!props.lives) {
+            setCurrentInfo("Please enter how many lives you want.");
+            return;
+        }
+
+        if (props.lives <= 0) {
+            setCurrentInfo("Please a valid number of lives.");
             return;
         }
 
@@ -50,7 +56,8 @@ function QuizMode(props) {
                 <div className="form-text">How many mistakes are allowed?</div>
             </div>
 
-            <button onClick={handleStart} className="btn btn-home mt-3">Start Quiz</button>
+            <p>{currentInfo}</p>
+            <button onClick={handleStart} className="btn btn-home">Start Quiz</button>
         </section>
     )
 }

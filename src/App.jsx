@@ -39,7 +39,7 @@ const auth = getAuth();
 
 function App() {
   const [courses, setCourses] = useState([]);
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState();
   const sets = flattenSets(courses);
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
