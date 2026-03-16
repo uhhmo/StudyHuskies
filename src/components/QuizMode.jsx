@@ -8,10 +8,17 @@ function QuizMode(props) {
     const navigate = useNavigate();
 
     const handleStart = () => {
-        if (selectedSet) {
-            props.setLives(Number(props.lives) || 3);
-            navigate(`/quiz/${selectedSet}`);
+        if (!selectedSet) {
+            alert("Please select a flashcard set first.");
+            return;
         }
+
+        if (!props.lives || props.lives <= 0) {
+            alert("Please enter how many lives you want.");
+            return;
+        }
+
+        navigate(`/quiz/${selectedSet}`);
     };
 
     if (!props.sets || props.sets.length === 0) {
