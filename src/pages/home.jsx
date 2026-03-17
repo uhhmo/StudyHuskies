@@ -5,7 +5,6 @@ import React from 'react';
 import HeroImage from '../components/HeroImage';
 import HomeSection from '../components/HomeSection';
 import HomeLogo from '../components/HomeLogo';
-import HomeForm from '../components/HomeForm';
 
 
 function home() {
@@ -14,7 +13,6 @@ function home() {
       <HeroImage/>
       <HomeSection/>
       <HomeLogo/>
-      <HomeForm/>
     </div>
   );
 }

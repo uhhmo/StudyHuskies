@@ -62,6 +62,8 @@ function Courses({ courses, setCourses }) {
         ) : (
           <div style={{ display: 'inline-flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
             <input
+              id='new-course-name'
+              name='new-course-name'
               className="form-control"
               style={{ width: '220px' }}
               type="text"
@@ -92,6 +94,8 @@ function Courses({ courses, setCourses }) {
                   {editingCourseId === course.id ? (
                     <div className="course-card" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       <input
+                        id={`edit-course-${course.id}`}
+                        name='edit-course-name'
                         className="form-control"
                         value={editCourseName}
                         onChange={e => setEditCourseName(e.target.value)}
@@ -190,6 +194,8 @@ function Courses({ courses, setCourses }) {
                       {addingSetForCourse === course.id ? (
                         <div style={{ display: 'flex', gap: '5px', marginTop: '6px' }}>
                           <input
+                            id={`new-set-for-${course.id}`}
+                            name='new-set-name'
                             className="form-control"
                             style={{ flex: 1, fontSize: '13px', padding: '5px 8px' }}
                             placeholder="Set name (e.g. Midterm)"

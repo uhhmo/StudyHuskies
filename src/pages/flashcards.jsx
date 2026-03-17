@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 
-function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
+function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
   const [activeSetId, setActiveSetId] = useState(sets[0]?.id || null);
   const [editingCardId, setEditingCardId] = useState(null);
@@ -85,9 +85,9 @@ function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
       <h2>Flashcards</h2>
       <p>Select a set to add or edit its cards.</p>
 
-      <div className="d-flex flex-column flex-md-row" style={{gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
+      <div className="d-flex flex-column flex-md-row" style={{ gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
 
-        
+
         <aside style={{ width: '200px', flexShrink: 0 }}>
           <h3 style={{ margin: '0 0 4px' }}>My Sets</h3>
           <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>
@@ -126,7 +126,7 @@ function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
           ))}
         </aside>
 
-        
+
         {activeSet ? (
           <section style={{ flex: 1, minWidth: 0, maxWidth: '680px' }}>
             <h2 style={{ marginTop: 0 }}>{activeSet.name}</h2>
@@ -139,19 +139,23 @@ function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
               + Add Card
             </button>
 
-            
+
             {addingCard && (
               <div style={{ background: '#f9f0f9', border: '1px dashed #800080', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
-                <label>Question</label>
+                <label htmlFor='new-card-question'>Question</label>
                 <input
+                  id='new-card-question'
+                  name='new-card-question'
                   className="form-control mb-2"
                   placeholder="Type a question"
                   value={newQ}
                   onChange={e => setNewQ(e.target.value)}
                   autoFocus
                 />
-                <label>Answer</label>
+                <label htmlFor='new-card-answer'>Answer</label>
                 <input
+                  id='new-card-answer'
+                  name='new-card-answer'
                   className="form-control mb-2"
                   placeholder="Type an answer"
                   value={newA}
@@ -173,10 +177,12 @@ function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
                     <article key={card.id} className="study-card">
                       {editingCardId === card.id ? (
                         <div>
-                          <label>Question</label>
-                          <input className="form-control mb-2" value={editQ} onChange={e => setEditQ(e.target.value)} />
-                          <label>Answer</label>
-                          <input className="form-control mb-2" value={editA} onChange={e => setEditA(e.target.value)} />
+                          <label htmlFor={`edit-question-${card.id}`}>Question</label>
+                          <input id={`edit-question-${card.id}`} name="edit-question" className="form-control mb-2" value={editQ} onChange={e => setEditQ(e.target.value)} />
+
+                          <label htmlFor={`edit-answer-${card.id}`}>Answer</label>
+                          <input id={`edit-answer-${card.id}`} name="edit-answer" className="form-control mb-2" value={editA} onChange={e => setEditA(e.target.value)} />
+
                           <div className="button-row">
                             <button className="btn-home" onClick={() => saveCard(card.id)}>Save</button>
                             <button className="btn-home" onClick={() => setEditingCardId(null)}>Cancel</button>
@@ -207,13 +213,13 @@ function Flashcards({ sets = [], setSets = () => {}, courses = [] }) {
                     </article>
                   ))}
                 </div>
-              <div className="study-btn-row">
-                <button className="btn-home" onClick={prevCard}>Prev</button>
-                <button className="btn-home" onClick={nextCard}>Next</button>
-              </div>
-              <p style={{ fontSize: '12px', color: '#888', marginTop: '4px', textAlign: 'center' }}>
-                Card {cardIndex + 1} of {activeSet.cards.length}
-              </p>
+                <div className="study-btn-row">
+                  <button className="btn-home" onClick={prevCard}>Prev</button>
+                  <button className="btn-home" onClick={nextCard}>Next</button>
+                </div>
+                <p style={{ fontSize: '12px', color: '#888', marginTop: '4px', textAlign: 'center' }}>
+                  Card {cardIndex + 1} of {activeSet.cards.length}
+                </p>
               </div>
             )}
           </section>

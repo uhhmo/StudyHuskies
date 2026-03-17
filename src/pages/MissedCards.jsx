@@ -72,11 +72,13 @@ function MissedCards(props) {
                     <p>{currentInfo}</p>
                 </div>
                 <div className="my-4">
-                    <p className="fs-5">
+                    <label htmlFor='user-answer' className="fs-5">
                         {cards[currentId].q}
-                    </p>
+                    </label>
 
                     <input
+                        id='user-answer'
+                        name="user-answer"
                         type="text"
                         className="form-control mb-3"
                         placeholder="Type your answer here"

@@ -39,6 +39,8 @@ function QuizMode(props) {
             <div className="mb-4">
                 <label htmlFor="flashcardSet" className="form-label">Select Flashcard Set</label>
                 <select
+                    id='flashcardSet'
+                    name="flashcardSet"
                     className="form-select"
                     value={selectedSet}
                     onChange={(e) => setSelectedSet(e.target.value)}
@@ -52,7 +54,7 @@ function QuizMode(props) {
 
             <div className="mb-4">
                 <label htmlFor="livesCount" className="form-label">Number of Lives</label>
-                <input type="number" className="form-control" onChange={(e) => props.setLives(Number(e.target.value))} />
+                <input id='livesCount' name="livesCount" type="number" className="form-control" onChange={(e) => props.setLives(Number(e.target.value))} />
                 <div className="form-text">How many mistakes are allowed?</div>
             </div>
 
