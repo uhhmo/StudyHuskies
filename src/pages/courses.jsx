@@ -16,7 +16,7 @@ function Courses({ courses, setCourses }) {
   const [newSetName, setNewSetName] = useState('');
 
   function addCourse() {
-    if (!newCourseName.trim()) { alert('Please enter a course name'); return; }
+    if (!newCourseName.trim()) {return; }
     const newCourse = { id: Date.now(), name: newCourseName.trim(), flashcardSets: [] };
     setCourses([...courses, newCourse]);
     setNewCourseName('');
@@ -24,7 +24,6 @@ function Courses({ courses, setCourses }) {
   }
 
   function deleteCourse(id) {
-    if (!window.confirm('Delete this course and all its sets?')) return;
     setCourses(courses.filter(c => c.id !== id));
     if (expandedCourseId === id) setExpandedCourseId(null);
   }

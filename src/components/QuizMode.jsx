@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 function QuizMode(props) {
 
@@ -28,7 +28,9 @@ function QuizMode(props) {
     };
 
     if (!props.sets || props.sets.length === 0) {
-        return <div>Loading study sets!</div>;
+        return <div><p>No study sets yet! Go create some first!</p>
+            <Link to='/flashcards' className="btn-home">Return to flashcards</Link>
+        </div>;
     }
 
     return (
