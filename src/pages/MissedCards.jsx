@@ -40,8 +40,8 @@ function MissedCards(props) {
 
     function handleDelete() {
         const updated = props.missedCards.filter(card => card.q !== currentCard.q);
+        setcurrentId(0);
         props.saveMissedCards(updated);
-        handleRandomCard();
     }
 
     function handleSkip() {
