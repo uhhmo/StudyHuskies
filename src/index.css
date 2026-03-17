@@ -17,7 +17,6 @@ body, #root {
     min-height: 100vh;
 }
 
-/* Navbar */
 nav {
     background-color: #800080;
     padding: 15px;
@@ -30,8 +29,7 @@ nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    padding-left: 20px;
-    gap: 20px;
+    gap: 2px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -43,31 +41,33 @@ nav li {
 nav a {
     color: white;
     text-decoration: none;
-    padding: 10px; 
-    display: block; 
+    padding: 6px 4px;
+    font-size: 12px;
+    display: block;
 }
 
 nav .btn-home {
-    padding: 8px 20px;
-    margin-right: 20px;
+    padding: 6px 10px;
+    margin-right: 8px;
+    font-size: 12px;
     white-space: nowrap;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     nav ul {
-        padding-left: 0;
-        gap: 2px;
+        padding-left: 20px;
+        gap: 20px;
     }
 
     nav a {
-        padding: 6px 4px;
-        font-size: 12px;
+        padding: 10px;
+        font-size: 1rem;
     }
 
     nav .btn-home {
-        padding: 6px 10px;
-        margin-right: 8px;
-        font-size: 12px;
+        padding: 8px 20px;
+        margin-right: 20px;
+        font-size: 1rem;
     }
 }
 
@@ -108,14 +108,19 @@ input {
     font-size: 14px;
 }
 
-/* Courses Page */
 .courses-header {
     text-align: center;
 }
 
 h1 {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
 }
 
 .add-course {
@@ -132,28 +137,39 @@ h1 {
     background-color: #800080;
     color: white;
     font-size: 1.2rem;
-    transition: #660066 0.3s ease color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .add-course button:hover {
     background-color: #660066;
 }
 
+/* Mobile: fluid width input */
 .add-course input {
     padding: 1rem;
     margin-right: 0.5rem;
     border-radius: 8px;
     border: 1px solid #ccc;
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     font-size: 1.1rem;
 }
 
+/* courses-list: fluid on mobile, constrained on desktop */
 .courses-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    width: 951px;  
+    width: 100%;
+    padding: 0 12px;
     margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .courses-list {
+        max-width: 980px;
+        padding: 0;
+    }
 }
 
 .courses-list > p {
@@ -164,9 +180,10 @@ h1 {
     font-size: 1.3rem;
 }
 
+/* course-card: full width on mobile, fixed on desktop */
 .course-card {
-    flex: 0 0 300px;
-    max-width: 300px;
+    flex: 0 0 100%;
+    max-width: 100%;
     background-color: white;
     border-radius: 12px;
     padding: 1.5rem;
@@ -175,8 +192,17 @@ h1 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+@media (min-width: 600px) {
+    .course-card {
+        flex: 0 0 300px;
+        max-width: 300px;
+    }
+}
+
 .course-card p {
     color: #666;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
     transition: color 0.3s ease;
 }
 
@@ -194,11 +220,6 @@ h1 {
     font-size: 1.5rem;
 }
 
-.course-card p {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-}
-
 .flashcard-set-item p {
     color: inherit;
     transition: color 0.3s ease;
@@ -209,11 +230,9 @@ footer {
     background-color: #f2f2f2;
     padding: 10px;
     text-align: center;
-
 }
 
-/* Blakes CSS */
-
+/* ── Hero / Header Image (mobile-first) ── */
 .header-image {
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('./assets/suzz.jpg');
@@ -227,13 +246,23 @@ footer {
     text-align: center;
 }
 
-
 .header-text h1 {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     color: white;
     margin: 0;
 }
 
+@media (min-width: 768px) {
+    .header-image {
+        height: 70vh;
+    }
+
+    .header-text h1 {
+        font-size: 5rem;
+    }
+}
+
+/* ── Buttons ── */
 .btn-home {
     display: inline-block;
     padding: 12px 30px;
@@ -242,7 +271,6 @@ footer {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -253,20 +281,21 @@ footer {
     color: #f2f2f2;
 }
 
+/* ── Images ── */
 .husky-image {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid #000; 
+    border: 3px solid #000;
     margin: 0 auto;
 }
 
+/* ── Background images ── */
 .about-image {
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                 url('./assets/UWCampus.jpg');
     background-size: cover;
     background-position: center;
-    
 }
 
 .sign-in-image {
@@ -282,39 +311,44 @@ footer {
     max-width: 400px;
 }
 
-#setSelect {
-  margin-left: 8px;
+/* ── Study / Selects ── */
+#courseSelect, #setSelect {
+    margin-left: 8px;
 }
 
 .study-btn-row {
-  margin-top: 14px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
+    margin-top: 14px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
 }
 
-#courseSelect, #setSelect {
-  margin-left: 8px;
-}
-
+/* study-card: auto height on mobile, fixed on desktop */
 .study-card {
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: white;
-
     width: 100%;
-    height: 220px;
-
+    height: auto;
+    min-height: 160px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     text-align: center;
     padding: 20px;
     cursor: pointer;
 }
 
+@media (min-width: 768px) {
+    .study-card {
+        width: 520px;
+        height: 220px;
+        min-height: unset;
+    }
+}
+
+/* ── Progress Bar ── */
 .progress {
     height: 20px;
 }
@@ -328,28 +362,22 @@ footer {
     display: block;
 }
 
-@media (min-width: 768px) {
-    .header-image {
-        height: 70vh;
-    }
-    .header-text h1 {
-        font-size: 5rem;
-    }
-
-    .study-card {
-        width: 520px;;
-    }
-}
-
-/* cards grid layout in flashcards page */
+/* ── Cards Grid ── */
 .cards-grid {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 16px;
     justify-content: flex-start;
 }
 
-/* button row used in flashcards and courses edit forms */
+@media (min-width: 600px) {
+    .cards-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
+
+/* ── Button Row ── */
 .button-row {
     display: flex;
     gap: 8px;
@@ -357,7 +385,7 @@ footer {
     flex-wrap: wrap;
 }
 
-/* quiz results score display */
+/* ── Quiz Score Display ── */
 .score-item {
     margin: 12px auto;
     max-width: 300px;
@@ -380,29 +408,13 @@ footer {
     color: #800080;
 }
 
-/* Responsive: courses grid on mobile */
-@media (max-width: 600px) {
-    .courses-list {
-        width: 100%;
-        padding: 0 12px;
-    }
+/* ── Quiz Stats ── */
+.quiz-stats .col {
+    font-size: 12px;
+}
 
-    .course-card {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    .cards-grid {
-        flex-direction: column;
-    }
-
-    .study-card {
-        width: 100%;
-        height: auto;
-        min-height: 160px;
-    }
-
+@media (min-width: 600px) {
     .quiz-stats .col {
-        font-size: 12px;
+        font-size: 1rem;
     }
 }
