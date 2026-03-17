@@ -71,11 +71,13 @@ function App() {
     const unregisterFunction = onValue(coursesRef, (snapshot) => {
       const data = snapshot.val();
 
-      let startArray = data;
-      if (!Array.isArray(data)) {
-        startArray = Object.values(data);
+      if(!data) {
+        setCourses([]);
+        setLoading(false);
+        return;
       }
 
+      let startArray = data;
 
       const toarray = startArray.map(course => ({
         ...course,
@@ -129,10 +131,6 @@ function App() {
     const unregisterFunction = onValue(missedRef, (snapshot) => {
       const data = snapshot.val() || [];
       let loadMissedCards = data;
-
-      if (!Array.isArray(data)) {
-        loadMissedCards = Object.values(data);
-      }
 
       setMissedCards(loadMissedCards);
 
