@@ -9,7 +9,7 @@ import HomeLogo from '../components/HomeLogo';
 
 function home() {
   return (
-    <div>
+    <div className="mb-4">
       <HeroImage/>
       <HomeSection/>
       <HomeLogo/>
