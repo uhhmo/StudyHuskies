@@ -21,7 +21,7 @@ function AboutSection({currentUser}) {
                 </div>
             </section>
 
-            <div class="text-center">
+            <div className="text-center">
                 <Link to={currentUser ? ('/courses') : ('/signIn')} className="btn-home">Get Started</Link>
             </div>
 
