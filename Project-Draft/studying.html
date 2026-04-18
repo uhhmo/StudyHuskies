@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Anderson Liew">
+    <meta name="description" content="Choose a flashcard set and view all cards to study.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Studying</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="img/icon.png">
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="flashcards.html">Flashcards</a></li>
+                <li><a href="studying.html">Studying</a></li>
+                <li><a href="gameQuiz.html">Quiz</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div>
+                <a href="signin.html" class="btn-home">Sign in</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Studying</h2>
+            <p>Select a flashcard set to view all cards at once.</p>
+            <label for="setSelect">Choose a set</label>
+            <select id="setSelect" name="setSelect">
+                <option>INFO 340</option>
+                <option>Midterm </option>
+                <option>Final</option>
+            </select>
+        </section>
+        <section>
+            <h2>Cards in this Set</h2>
+            <div class="cards-grid">
+                <article class="study-card">
+                    <h3>What is a semantic tag?</h3>
+                    <p>A semantic tag describes the meaning of its content.</p>
+                </article>
+                <article class="study-card">
+                    <h3>What does the &lt;p&gt; tag do?</h3>
+                    <p>It creates a paragraph of text.</p>
+                </article>
+                <article class="study-card">
+                    <h3>What does CSS control?</h3>
+                    <p>CSS controls layout and styling.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>INFO 340 Project - Winter 2026</p>
+    </footer>
+
+</body>
+
+</html>
