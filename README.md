@@ -1,21 +1,47 @@
-<<<<<<< HEAD
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
 # StudyHuskies
-study app designed to help students with productivity. FROM INFO 340- Client-Side-Development
->>>>>>> 0d5a76ee37592a5f801427dc6be792c9b94c9033
+
+StudyHuskies is a React and Vite app for organizing course flashcards and studying with an adventure-style quiz flow.
+
+## Project Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the app locally:
+
+```bash
+npm run dev
+```
+
+## Unit Tests
+
+This checkpoint includes unit tests for the `QuizStats` component in `src/components/QuizStats.jsx`.
+
+What is covered:
+
+- `formatTime()` formatting logic for minute/second output
+- Rendering of question progress, checkpoint, time, and lives
+- Display of default elapsed time when no value is provided
+
+Run the tests:
+
+```bash
+npm run test
+```
+
+Run the tests with coverage:
+
+```bash
+npm run test:coverage
+```
+
+Coverage for the tested component:
+
+- `QuizStats.jsx`: 100% statement, branch, function, and line coverage in the current `npm run test:coverage` report
+
+## Checkpoint Notes
+
+This repository checkpoint includes at least one fully tested component and the instructions needed to reproduce the test run and coverage report.
