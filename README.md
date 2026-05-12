@@ -26,9 +26,6 @@ StudyHuskies is structured primarily around React components, using React Router
 
 
 ## Architectural Elements 
-The diagram below illustrates the relationships between components, data models, and external services. Solid arrows indicate composition, while dashed arrows indicate dependencies such as routing and data use.
-
-![Architecture Diagram](images/temp_architectural_diagram.jpg)
 
 The table below lists each architectural element and its role in the system:
 
@@ -74,6 +71,9 @@ The Flashcards.jsx component receives a flattened sets array derived from nested
 
 ### Figure 1. Component Architecture Diagram
 Figure 1 highlights how App.jsx is the only node that touches Firebase directly. The Flashcards component sits in the middle of the hierarchy — receiving sets and setSets from App and rendering the card editor UI without needing to know anything about the broader course structure.
+
+![Architecture Diagram](images/temp_architectural_diagram.jpg)
+*Figure 1: Architecture Diagram*
 
 ## Process Flows
 This section describes how information moves through the codebase during the three most important interactions in Study Huskies, described at the level of which components render, which state changes, and which functions are called.
