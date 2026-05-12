@@ -92,6 +92,7 @@ When a user saves a card in Flashcards, the component calls setSets(newSets) —
 A user navigates to /Quiz, which renders QuizMode. After selecting a set and number of lives, QuizMode calls props.setLives() to update App state, then calls navigate(/quiz/:setId). React Router renders QuizActive, which enters a gameplay loop tracking correct answers, lives, and missed cards. On completion, QuizActive calls navigate(/quiz/:setId/results, { state: scoreData }). React Router renders QuizReview, which reads the score from useLocation().state and displays the results.
 
 ### Figure 2. Flashcard DataFlow Diagram
+![Figure 2](src/assets/Figure2.jpeg)
 Figure 2 highlights the key architectural feature of the Flashcards flow: all three mutation operations — add, edit, and delete — share the same write path back through App to Firebase. No data ever bypasses App on the way to the database.
 
 ## Architecture Assessment
