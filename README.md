@@ -30,13 +30,22 @@ npm run dev
 
 
 ### Code Structure Analysis
+   ## Architectural Elements 
+
    ## Process Flow
 
 
 
 
 ### Architecture Assessment
-   ## Code Smells
+   ## Code Deficiencies
+   # Long Function - Entire Component
+    The Flashcards.jsx component is way too long, making it difficult to test and modify the code
+   # Data Clumps - (lines 14-15 and 17-18)
+    Occurs in the state declarations - editQ and editA + newQ and newA are never used independently, making the extra state declarations redundant
+   # Mysterious Names - (lines 10 - 68)
+    Occurs in the state declarations and each of the present functions - question, answer, and set are all abbreviated to q, a, and s respectively, which hurts the overall readability of the codebase. 
+
 
 
 
