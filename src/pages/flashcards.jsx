@@ -11,11 +11,9 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
   const [activeSetId, setActiveSetId] = useState(sets[0]?.id || null);
   const [editingCardId, setEditingCardId] = useState(null);
-  const [editQ, setEditQ] = useState('');
-  const [editA, setEditA] = useState('');
+  const [editCard, setEditCard] = useState({ q: '', a: '' });
+  const [newCard, setNewCard] = useState({ q: '', a: '' });
   const [addingCard, setAddingCard] = useState(false);
-  const [newQ, setNewQ] = useState('');
-  const [newA, setNewA] = useState('');
   const [cardIndex, setCardIndex] = useState(0);
 
   function getCourseName(setId) {
@@ -34,13 +32,13 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
   const activeSet = sets.find(s => s.id === activeSetId);
 
   function addCard() {
-    if (!newQ.trim() || !newA.trim()) return;
+    if (!newCard.q.trim() || !newCard.a.trim()) return;
     setSets(sets.map(s =>
       s.id === activeSetId
-        ? { ...s, cards: [...s.cards, { id: Date.now(), q: newQ.trim(), a: newA.trim() }] }
+        ? { ...s, cards: [...s.cards, { id: Date.now(), q: newCard.q.trim(), a: newCard.a.trim() }] }
         : s
     ));
-    setNewQ(''); setNewA(''); setAddingCard(false);
+    setNewCard({ q: '', a: '' }); setAddingCard(false);
   }
 
   function deleteCard(cardId) {
@@ -53,15 +51,14 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
   function startEditCard(card) {
     setEditingCardId(card.id);
-    setEditQ(card.q);
-    setEditA(card.a);
+    setEditCard({ q: card.q, a: card.a });
   }
 
   function saveCard(cardId) {
-    if (!editQ.trim() || !editA.trim()) return;
+    if (!editCard.q.trim() || !editCard.a.trim()) return;
     setSets(sets.map(s =>
       s.id === activeSetId
-        ? { ...s, cards: s.cards.map(c => c.id === cardId ? { ...c, q: editQ.trim(), a: editA.trim() } : c) }
+        ? { ...s, cards: s.cards.map(c => c.id === cardId ? { ...c, q: editCard.q.trim(), a: editCard.a.trim() } : c) }
         : s
     ));
     setEditingCardId(null);
@@ -148,8 +145,8 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
                   name='new-card-question'
                   className="form-control mb-2"
                   placeholder="Type a question"
-                  value={newQ}
-                  onChange={e => setNewQ(e.target.value)}
+                  value={newCard.q}
+                  onChange={e => setNewCard({ ...newCard, q: e.target.value })}
                   autoFocus
                 />
                 <label htmlFor='new-card-answer'>Answer</label>
@@ -158,12 +155,12 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
                   name='new-card-answer'
                   className="form-control mb-2"
                   placeholder="Type an answer"
-                  value={newA}
-                  onChange={e => setNewA(e.target.value)}
+                  value={newCard.a}
+                  onChange={e => setNewCard({ ...newCard, a: e.target.value })}
                 />
                 <div className="button-row">
                   <button type="button" className="btn-home" onClick={addCard}>Save</button>
-                  <button type="button" className="btn-home" onClick={() => { setAddingCard(false); setNewQ(''); setNewA(''); }}>Cancel</button>
+                  <button type="button" className="btn-home" onClick={() => { setAddingCard(false); setNewCard({ q: '', a: '' }); }}>Cancel</button>
                 </div>
               </div>
             )}
@@ -178,10 +175,10 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
                       {editingCardId === card.id ? (
                         <div>
                           <label htmlFor={`edit-question-${card.id}`}>Question</label>
-                          <input id={`edit-question-${card.id}`} name="edit-question" className="form-control mb-2" value={editQ} onChange={e => setEditQ(e.target.value)} />
+                          <input id={`edit-question-${card.id}`} name="edit-question" className="form-control mb-2" value={editCard.q} onChange={e => setEditCard({ ...editCard, q: e.target.value })} />
 
                           <label htmlFor={`edit-answer-${card.id}`}>Answer</label>
-                          <input id={`edit-answer-${card.id}`} name="edit-answer" className="form-control mb-2" value={editA} onChange={e => setEditA(e.target.value)} />
+                          <input id={`edit-answer-${card.id}`} name="edit-answer" className="form-control mb-2" value={editCard.a} onChange={e => setEditCard({ ...editCard, a: e.target.value })} />
 
                           <div className="button-row">
                             <button className="btn-home" onClick={() => saveCard(card.id)}>Save</button>

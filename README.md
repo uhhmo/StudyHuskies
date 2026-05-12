@@ -77,3 +77,11 @@ Run the tests with coverage:
 ```bash
 npm run test:coverage
 ```
+### Refactoring
+   ## Data Clumps Fix - Used Introduce Parameter Object Refactoring 
+   Group each pair into a single state object
+   ```javascript
+    const [editCard, setEditCard] = useState({ q: '', a: '' });
+    const [newCard, setNewCard] = useState({ q: '', a: '' });
+   ```
+   ## Mysterious Names Fix - 
