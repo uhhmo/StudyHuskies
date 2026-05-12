@@ -180,7 +180,7 @@ canceling forms without saving). The full test suite can be found in
 | Saves a new flashcard | Tests the happy path of addCard — verifies setSets is called with the new card appended |
 | Does not save with blank question | Tests the unhappy path guard in addCard — setSets should not be called if question is empty |
 | Does not save with blank answer | Tests the unhappy path guard in addCard — setSets should not be called if answer is empty |
-| Closes the add form on cancel | Verifies cancel hides the form and clears the input fields |
+| Closes the add form on cancel | Verifies cancel hides the add form |
 | Deletes a flashcard | Tests deleteCard removes the correct card by ID from the active set |
 | Opens edit form with existing values | Verifies startEditCard pre-fills the edit inputs with the current card's question and answer |
 | Saves edited flashcard text | Tests the happy path of saveCard — verifies setSets is called with the updated card values |
@@ -219,16 +219,48 @@ Tests the `Flashcards` page component. The component receives `sets` and `setSet
  
 Tests are implemented using **Vitest** with **React Testing Library**. Vitest integrates with the project's Vite build pipeline. React Testing Library provides `render`, `screen`, and `fireEvent` for mounting components and simulating user interactions.
  
+### Testing framework and setup
+
+Tests are implemented using **Vitest** with **React Testing Library**. Vitest integrates with the project's Vite build pipeline. React Testing Library provides `render`, `screen`, and `fireEvent` for mounting components and simulating user interactions.
+
+The test environment is configured in `vite.config.js`:
+
+```js
+test: {
+  globals: true,
+  environment: 'jsdom',
+  setupFiles: './src/test/setup.js',
+}
+```
+
+The setup file (`src/test/setup.js`) imports jest-dom matchers for Vitest and registers a global `cleanup` after each test:
+
+```js
+import '@testing-library/jest-dom/vitest';
+import { afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
+
+afterEach(() => {
+  cleanup();
+});
+```
+
 ### How to run the tests
- 
+
+**Required dev dependencies:**
+
+```bash
+npm install --save-dev vitest @testing-library/react @testing-library/jest-dom @testing-library/dom jsdom --legacy-peer-deps
+```
+
 **Run the suite:**
- 
+
 ```bash
 npm test
 ```
- 
+
 **Run with coverage:**
- 
+
 ```bash
 npm run test:coverage
 ```
