@@ -273,3 +273,8 @@ npm run test:coverage
 Figure 4 shows the results of running the full test suite via `npm run test`. All 16 Flashcards component tests and 3 QuizStats tests pass successfully across 2 test files, with a total duration of 1.38 seconds. The 16 Flashcards tests cover all five describe blocks including empty state, rendering, adding, deleting, and editing, confirming that the refactored component maintains the same behavior as the original across all tested paths.
 
 NOTE: Coverage reporting could not be generated due to a dependency conflict with the project's current package versions. The test case justification table above documents how each function and rendering branch is covered by the 16 tests.
+
+## Contributors
+
+- Nathan Adams
+- Momo Tolenoa
