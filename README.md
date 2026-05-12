@@ -104,7 +104,9 @@ This component was chosen because it contains four distinct functions (addCard, 
    ### Code Deficiencies
 
    ### Long Function - Entire Component
-    The Flashcards.jsx component is way too long, making it difficult to test and modify the code
+    The flashcards.jsx component is way too long, making it difficult to test, modify the code, and understand many aspects of the code.
+   #### Fix - Extract Class
+   In order to reduce the size of the component without impacting the functionality of the site and breaking any of the tests, splitting the component into multiple components (`SetSidebar.jsx`, `CardForm.jsx` and `CardViewer`) and then routing them back to `flashcards.jsx` would maintain all functionality while also making the code much easier to test, reduce the overall size of the function and make it much easier to make additions to this part of the codebase in the future.
 
    ### Data Clumps - (lines 14-15 and 17-18)
     Occurs in the state declarations - editQ and editA + newQ and newA are never used independently, making the extra state declarations redundant

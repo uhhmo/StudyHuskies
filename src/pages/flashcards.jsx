@@ -10,6 +10,9 @@ import React, { useState } from 'react';
 // Plain anchor tags cause a full page reload in a React Router SPA.
 // Using <Link> keeps navigation client-side and preserves app state.
 import { Link } from 'react-router-dom';
+import SetSidebar from '../components/SetSidebar';
+import CardForm from '../components/CardForm';
+import CardViewer from '../components/CardViewer';
 
 function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
@@ -123,47 +126,12 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
       <div className="d-flex flex-column flex-md-row" style={{ gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
 
         {/* Sidebar — set list */}
-        <aside style={{ width: '200px', flexShrink: 0 }}>
-          <h3 style={{ margin: '0 0 4px' }}>My Sets</h3>
-          <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>
-            {/* REFACTOR: <a href> → <Link to> */}
-            Add sets in <Link to="/courses" style={{ color: '#800080' }}>Courses</Link>.
-          </p>
-
-          {sets.map(set => {
-            const courseName = getCourseName(set.id);
-            return (
-              <div
-                key={set.id}
-                className={activeSetId === set.id ? 'btn-home flashcard-set-item' : 'course-card flashcard-set-item'}
-                style={{
-                  cursor: 'pointer',
-                  marginBottom: '8px',
-                  display: 'block',
-                  borderRadius: '12px',
-                  padding: '1.5rem',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
-                }}
-                // REFACTOR (Testability): was an inline arrow calling 4 setters.
-                // Now delegates to the named selectSet() function above.
-                onClick={() => selectSet(set.id)}
-              >
-                <p style={{ margin: '0 0 2px', fontWeight: 'bold', fontSize: '14px' }}>{set.name}</p>
-                <p style={{ margin: 0, fontSize: '12px', opacity: 0.75 }}>
-                  {set.cards.length} card(s)
-                </p>
-                {/* REFACTOR (Mysterious Names): getCourseName called once into a
-                    variable — previously called twice per set (once in the condition,
-                    once inside it), running the same find() twice unnecessarily. */}
-                {courseName && (
-                  <p style={{ margin: '2px 0 0', fontSize: '11px', opacity: 0.6 }}>
-                    {courseName}
-                  </p>
-                )}
-              </div>
-            );
-          })}
-        </aside>
+        <SetSidebar
+          sets={sets}
+          activeSetId={activeSetId}
+          onSelectSet={selectSet}
+          getCourseName={getCourseName}
+        />
 
         {/* Main panel — card editor */}
         {activeSet ? (
@@ -181,29 +149,16 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
             {/* Add card form */}
             {addingCard && (
               <div style={{ background: '#f9f0f9', border: '1px dashed #800080', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
-                <label htmlFor='new-card-question'>Question</label>
-                <input
-                  id='new-card-question'
-                  name='new-card-question'
-                  className="form-control mb-2"
-                  placeholder="Type a question"
-                  value={newCard.question}
-                  onChange={e => setNewCard({ ...newCard, question: e.target.value })}
-                  autoFocus
+                <CardForm
+                  question={newCard.question}
+                  answer={newCard.answer}
+                  onChangeQuestion={e => setNewCard({ ...newCard, question: e.target.value })}
+                  onChangeAnswer={e => setNewCard({ ...newCard, answer: e.target.value })}
+                  onSave={addCard}
+                  onCancel={() => { setAddingCard(false); setNewCard({ question: '', answer: '' }); }}
+                  questionId="new-card-question"
+                  answerId="new-card-answer"
                 />
-                <label htmlFor='new-card-answer'>Answer</label>
-                <input
-                  id='new-card-answer'
-                  name='new-card-answer'
-                  className="form-control mb-2"
-                  placeholder="Type an answer"
-                  value={newCard.answer}
-                  onChange={e => setNewCard({ ...newCard, answer: e.target.value })}
-                />
-                <div className="button-row">
-                  <button type="button" className="btn-home" onClick={addCard}>Save</button>
-                  <button type="button" className="btn-home" onClick={() => { setAddingCard(false); setNewCard({ question: '', answer: '' }); }}>Cancel</button>
-                </div>
               </div>
             )}
 
@@ -211,67 +166,20 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
             {activeSet.cards.length === 0 ? (
               <p style={{ color: '#888' }}>No cards yet — add your first one above!</p>
             ) : (
-              <div>
-                <div className="cards-grid" style={{ width: '100%', maxWidth: '100%', margin: 0 }}>
-                  {[activeSet.cards[cardIndex]].map((card) => (
-                    <article key={card.id} className="study-card">
-                      {editingCardId === card.id ? (
-                        <div>
-                          <label htmlFor={`edit-question-${card.id}`}>Question</label>
-                          <input
-                            id={`edit-question-${card.id}`}
-                            name="edit-question"
-                            className="form-control mb-2"
-                            value={editCard.question}
-                            onChange={e => setEditCard({ ...editCard, question: e.target.value })}
-                          />
-                          <label htmlFor={`edit-answer-${card.id}`}>Answer</label>
-                          <input
-                            id={`edit-answer-${card.id}`}
-                            name="edit-answer"
-                            className="form-control mb-2"
-                            value={editCard.answer}
-                            onChange={e => setEditCard({ ...editCard, answer: e.target.value })}
-                          />
-                          <div className="button-row">
-                            <button className="btn-home" onClick={() => saveCard(card.id)}>Save</button>
-                            <button className="btn-home" onClick={() => setEditingCardId(null)}>Cancel</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div>
-                          <h3>{card.q}</h3>
-                          <p>{card.a}</p>
-                          <div style={{ display: 'flex', gap: '2px', marginTop: '8px' }}>
-                            <button
-                              title="Edit card"
-                              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', padding: '4px 8px', color: '#555', lineHeight: 1 }}
-                              onClick={() => startEditCard(card)}
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              title="Delete card"
-                              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', padding: '4px 8px', color: '#c0392b', lineHeight: 1 }}
-                              onClick={() => deleteCard(card.id)}
-                            >
-                              🗑️
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </article>
-                  ))}
-                </div>
-
-                <div className="study-btn-row">
-                  <button className="btn-home" onClick={prevCard}>Prev</button>
-                  <button className="btn-home" onClick={nextCard}>Next</button>
-                </div>
-                <p style={{ fontSize: '12px', color: '#888', marginTop: '4px', textAlign: 'center' }}>
-                  Card {cardIndex + 1} of {activeSet.cards.length}
-                </p>
-              </div>
+              <CardViewer
+                card={activeSet.cards[cardIndex]}
+                cardIndex={cardIndex}
+                totalCards={activeSet.cards.length}
+                editingCardId={editingCardId}
+                editCard={editCard}
+                setEditCard={setEditCard}
+                onEdit={startEditCard}
+                onDelete={deleteCard}
+                onSave={saveCard}
+                onCancel={() => setEditingCardId(null)}
+                onNext={nextCard}
+                onPrev={prevCard}
+              />
             )}
           </section>
         ) : (
