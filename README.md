@@ -26,31 +26,36 @@ npm run dev
 ## Report
 
 
-### Overview
+## Overview
 
 
-### Code Structure Analysis
-   ## Architectural Elements 
+## Code Structure Analysis
+   ### Architectural Elements 
 
-   ## Process Flow
-
-
+   ### Process Flow
 
 
-#### Architecture Assessment
+
+
+## Architecture Assessment
    ### Code Deficiencies
-   ## Long Function - Entire Component
+   #### Long Function - Entire Component
     The Flashcards.jsx component is way too long, making it difficult to test and modify the code
-   ## Data Clumps - (lines 14-15 and 17-18)
+   #### Data Clumps - (lines 14-15 and 17-18)
     Occurs in the state declarations - editQ and editA + newQ and newA are never used independently, making the extra state declarations redundant
-   # Fix - Used Introduce Parameter Object Refactoring
+   ##### Fix - Used Introduce Parameter Object Refactoring
     Grouped each pair into a single state object
    ```javascript
     const [editCard, setEditCard] = useState({ q: '', a: '' });
     const [newCard, setNewCard] = useState({ q: '', a: '' });
    ```
-   ## Mysterious Names - (lines 10 - 68)
+   #### Mysterious Names - (lines 10 - 68)
     Occurs in the state declarations and each of the present functions - question, answer, and set are all abbreviated to q, a, and s respectively, which hurts the overall readability of the codebase. 
+   ##### Fix - Rename Field 
+    Would map q & a to question & answer (cannot explicitly rename q and a due to them being declared like this in Firebase, which changing could affect the entire codebase)
+   ```javascript
+    setEditCard({ question: card.q, answer: card.a });
+   ``` 
 
 
 
