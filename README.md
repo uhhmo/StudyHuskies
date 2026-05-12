@@ -70,6 +70,7 @@ App.jsx is the only component that communicates directly with Firebase. Firebase
 The Flashcards.jsx component receives a flattened sets array derived from nested course data using the flattenSets utility function in App.jsx. When flashcards are modified, the updated flat structure is merged back into the nested course structure before being written to Firebase.
 
 ### Figure 1. Component Architecture Diagram
+![Figure 1](src/assets/Figure1.jpeg)
 Figure 1 highlights how App.jsx is the only node that touches Firebase directly. The Flashcards component sits in the middle of the hierarchy — receiving sets and setSets from App and rendering the card editor UI without needing to know anything about the broader course structure.
 
 ![Architecture Diagram](images/temp_architectural_diagram.jpg)
