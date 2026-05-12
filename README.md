@@ -119,8 +119,8 @@ This component was chosen because it contains four distinct functions (addCard, 
    #### Fix - Used Introduce Parameter Object Refactoring
     Grouped each pair into a single state object, reducing redundancy throughout the component and making the component a bit more concise
    ```javascript
-    const [editCard, setEditCard] = useState({ q: '', a: '' });
-    const [newCard, setNewCard] = useState({ q: '', a: '' });
+    const [editCard, setEditCard] = useState({ question: '', answer: '' });
+    const [newCard, setNewCard] = useState({ question: '', answer: '' });
    ```
    ### Mysterious Names - (lines 10 - 68)
     Occurs in the state declarations and each of the present functions - question, answer, and set are all abbreviated to q, a, and s respectively, which hurts the overall readability of the codebase. 
@@ -155,6 +155,36 @@ This component was chosen because it contains four distinct functions (addCard, 
 ### Selected element and rationale
  
 The unit tests target the `Flashcards` component (`src/pages/flashcards.jsx`). This component was chosen because it contains four distinct interactive functions (`addCard`, `deleteCard`, `startEditCard`, `saveCard`) plus multiple rendering branches (empty state, card display, add form, edit form), giving a wide range of behaviors to test. The tests verify both the happy paths (normal add/edit/delete, switching sets) and the unhappy paths (saving with blank inputs, canceling forms).
+
+### Test Case Justification
+
+The test suite is organized into five describe blocks: empty state, rendering, 
+adding, deleting, and editing. Each test case is named to reflect the specific 
+behavior being verified. Tests cover both happy paths (saving a valid card, 
+switching sets) and unhappy paths (saving with a blank question or answer, 
+canceling forms without saving). The full test suite can be found in 
+`src/tests/flashcards.test.jsx`.
+
+### Individual Test Case Justifications
+
+| Test | Justification |
+|---|---|
+| Shows a message when no sets exist | Verifies the empty state branch renders the correct fallback message when no sets are passed |
+| Shows a Courses link in empty state | Ensures a navigation link to Courses is available so the user can create sets |
+| Renders the heading | Confirms the component mounts and renders basic UI correctly |
+| Renders all set names | Verifies the sidebar correctly displays all sets passed via props |
+| Shows the first flashcard by default | Confirms cardIndex initializes to 0 and the first card is shown on load |
+| Switches sets when clicked | Verifies that clicking a set in the sidebar updates the active set and displays its first card |
+| Shows empty state for sets with no cards | Tests the empty cards branch within an active set renders the correct message |
+| Opens the add card form | Verifies the add card form appears when the add button is clicked |
+| Saves a new flashcard | Tests the happy path of addCard — verifies setSets is called with the new card appended |
+| Does not save with blank question | Tests the unhappy path guard in addCard — setSets should not be called if question is empty |
+| Does not save with blank answer | Tests the unhappy path guard in addCard — setSets should not be called if answer is empty |
+| Closes the add form on cancel | Verifies cancel hides the form and clears the input fields |
+| Deletes a flashcard | Tests deleteCard removes the correct card by ID from the active set |
+| Opens edit form with existing values | Verifies startEditCard pre-fills the edit inputs with the current card's question and answer |
+| Saves edited flashcard text | Tests the happy path of saveCard — verifies setSets is called with the updated card values |
+| Closes edit form without saving | Verifies cancel does not call setSets and hides the edit form |
  
 ### Testing framework and setup
  
@@ -201,3 +231,12 @@ npm test
 ```bash
 npm run test:coverage
 ```
+
+### Test Results
+
+![Figure 4](src/images/passedtests.jpg)
+*Figure 4: Terminal output showing all 19 tests passing across 2 test files, including all 16 Flashcards component tests.*
+
+Figure 4 shows the results of running the full test suite via `npm run test`. All 16 Flashcards component tests and 3 QuizStats tests pass successfully across 2 test files, with a total duration of 1.38 seconds. The 16 Flashcards tests cover all five describe blocks including empty state, rendering, adding, deleting, and editing, confirming that the refactored component maintains the same behavior as the original across all tested paths.
+
+NOTE: Coverage reporting could not be generated due to a dependency conflict with the project's current package versions. The test case justification table above documents how each function and rendering branch is covered by the 16 tests.
