@@ -111,7 +111,7 @@ This component was chosen because it contains four distinct functions (addCard, 
    ### Data Clumps - (lines 14-15 and 17-18)
     Occurs in the state declarations - editQ and editA + newQ and newA are never used independently, making the extra state declarations redundant
    #### Fix - Used Introduce Parameter Object Refactoring
-    Grouped each pair into a single state object
+    Grouped each pair into a single state object, reducing redundancy throughout the component and making the component a bit more concise
    ```javascript
     const [editCard, setEditCard] = useState({ q: '', a: '' });
     const [newCard, setNewCard] = useState({ q: '', a: '' });
@@ -124,15 +124,20 @@ This component was chosen because it contains four distinct functions (addCard, 
     setEditCard({ question: card.q, answer: card.a });
    ``` 
 
-   ### <a href> was used instead of <Link> - (line 130)
-   Using <a href> goes against naming rules defined by React, which would cause the site to run slower.
+   ### Duplicated Code - (SetSidebar.jsx lines 38-40)
+   The getCourseName function was called twice unnecessarily, once by the condition and once inside the code, leading to redundancy and increasing the risk of confusion for people reading the codebase. 
+   #### Fix - Call courseName in a Variable
+   By setting courseName as a variable, it makes it so the `find()` being used twice originally is now only used once at the beginning of the code, and then that variable is called twice instead, reducing redundancy and making the code more clear.  
+
+   ### <a href> was used instead of <Link> - (SetSidebar.jsx line 10)
+   Using <a href> goes against naming rules defined by React, which would cause the site to run slower due to the page reloading fully.
    #### Fix - Replace with <Link>
    <Link> is the proper structure that React is looking for, which would avoid any potential issues with a full page reload
    ```javascript
     Add sets in <Link to="/courses" style={{ color: '#800080' }}>Courses</Link>.
    ```
 
-   ### Testability Issue - (line 149)
+   ### Testability Issue - (SetSidebar.jsx line 29)
    This line was intially calling four different setters, which would be extremely difficult to test.
    #### Fix - Use Existing Functions 
    The selectSet function being used here has the same affect as using the four setters, so replacing those setters with the selectSet function allows for the code to be simpler and much easier to test as well.
