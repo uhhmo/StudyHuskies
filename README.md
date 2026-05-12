@@ -49,16 +49,16 @@ The architecture is analyzed primarily at the React component level rather than 
 
 ## Component Relationships and Dependencies
 
-### State Ownership
+### **State Ownership**
 App.jsx is the central hub of the dependency graph and acts as the global state owner. Shared application state, including courses, flashcard sets, authentication status, missed cards, and quiz lives, is stored and coordinated at this level.
 
-### Data Flow
+### **Data Flow**
 The application follows a unidirectional data flow architecture. State flows downward from App.jsx into child components through props, while state updates flow upward through callback props such as updateCourses, setSets, and saveMissedCards.
 
-### Routing Dependencies
+### **Routing Dependencies**
 React Router coordinates transitions between route-level components. Most pages receive their required data through props from App.jsx. The primary exception is QuizReview.jsx, which receives quiz result data through location.state after navigation from QuizActive.jsx.
 
-### Firebase Dependencies
+### **Firebase Dependencies**
 
 App.jsx is the only component that communicates directly with Firebase. Firebase Authentication is used to monitor login state through onAuthStateChanged, while Firebase Realtime Database is accessed through onValue listeners and set() write operations.
 
@@ -66,7 +66,10 @@ App.jsx is the only component that communicates directly with Firebase. Firebase
 
 The Flashcards.jsx component receives a flattened sets array derived from nested course data using the flattenSets utility function in App.jsx. When flashcards are modified, the updated flat structure is merged back into the nested course structure before being written to Firebase.
 
-### Process Flows
+### Figure 1. Component Architecture Diagram
+Figure 1 highlights how App.jsx is the only node that touches Firebase directly. The Flashcards component sits in the middle of the hierarchy — receiving sets and setSets from App and rendering the card editor UI without needing to know anything about the broader course structure.
+
+## Process Flows
 This section describes how information moves through the codebase during the three most important interactions in Study Huskies, described at the level of which components render, which state changes, and which functions are called.
 
 #### App initialization and data loading
@@ -84,7 +87,6 @@ A user navigates to /Quiz, which renders QuizMode. After selecting a set and num
 
 ### Figure 2. Flashcard DataFlow Diagram
 Figure 2 highlights the key architectural feature of the Flashcards flow: all three mutation operations — add, edit, and delete — share the same write path back through App to Firebase. No data ever bypasses App on the way to the database.
-
 
 ## Architecture Assessment
 ### Selected Element : Flashcards.jsx
