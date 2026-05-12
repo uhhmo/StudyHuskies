@@ -122,6 +122,21 @@ This component was chosen because it contains four distinct functions (addCard, 
     setEditCard({ question: card.q, answer: card.a });
    ``` 
 
+   ### <a href> was used instead of <Link> - (line 130)
+   Using <a href> goes against naming rules defined by React, which would cause the site to run slower.
+   #### Fix - Replace with <Link>
+   <Link> is the proper structure that React is looking for, which would avoid any potential issues with a full page reload
+   ```javascript
+    Add sets in <Link to="/courses" style={{ color: '#800080' }}>Courses</Link>.
+   ```
+
+   ### Testability Issue - (line 149)
+   This line was intially calling four different setters, which would be extremely difficult to test.
+   #### Fix - Use Existing Functions 
+   The selectSet function being used here has the same affect as using the four setters, so replacing those setters with the selectSet function allows for the code to be simpler and much easier to test as well.
+   ```javascript
+    onClick={() => selectSet(set.id)}
+   ```
 ## Unit Tests
  
 ### Selected element and rationale
