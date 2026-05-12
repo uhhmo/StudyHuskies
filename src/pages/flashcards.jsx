@@ -6,19 +6,87 @@
 // ============================================================
 
 import React, { useState } from 'react';
+// REFACTOR (Standards Violation): replaced <a href="/courses"> with <Link to="/courses">.
+// Plain anchor tags cause a full page reload in a React Router SPA.
+// Using <Link> keeps navigation client-side and preserves app state.
+import { Link } from 'react-router-dom';
 
 function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
   const [activeSetId, setActiveSetId] = useState(sets[0]?.id || null);
   const [editingCardId, setEditingCardId] = useState(null);
-  const [editCard, setEditCard] = useState({ question: '', answer: '' });
-  const [newCard, setNewCard] = useState({ question: '', answer: '' });
   const [addingCard, setAddingCard] = useState(false);
   const [cardIndex, setCardIndex] = useState(0);
 
+  // REFACTOR (Data Clumps): editQ + editA were always declared and used together,
+  // never independently. Grouped into a single state object.
+  // Introduce Parameter Object refactoring from Fowler's catalogue.
+  const [editCard, setEditCard] = useState({ question: '', answer: '' });
+
+  // REFACTOR (Data Clumps): newQ + newA were always declared and used together,
+  // never independently. Grouped into a single state object.
+  const [newCard, setNewCard] = useState({ question: '', answer: '' });
+
+  const activeSet = sets.find(set => set.id === activeSetId);
+
+  // Returns the course name that contains a given set ID, or null if not found.
   function getCourseName(setId) {
     const course = courses.find(c => c.flashcardSets.some(set => set.id === setId));
     return course ? course.name : null;
+  }
+
+  // REFACTOR (Testability / inline onClick): the sidebar click handler previously
+  // called three state setters inline in the JSX onClick with no name.
+  // Extracted into a named function so the behavior is clear and testable.
+  function selectSet(setId) {
+    setActiveSetId(setId);
+    setEditingCardId(null);
+    setAddingCard(false);
+    setCardIndex(0);
+  }
+
+  // Adds a new card to the active set.
+  // Guards against blank question or answer before calling setSets.
+  // Note: q and a are kept as the Firebase field names to avoid a breaking
+  // schema change across the entire codebase. question/answer are used
+  // internally in state only.
+  function addCard() {
+    if (!newCard.question.trim() || !newCard.answer.trim()) return;
+    setSets(sets.map(set =>
+      set.id === activeSetId
+        ? { ...set, cards: [...set.cards, { id: Date.now(), q: newCard.question.trim(), a: newCard.answer.trim() }] }
+        : set
+    ));
+    setNewCard({ question: '', answer: '' });
+    setAddingCard(false);
+  }
+
+  // Removes a card from the active set by its ID.
+  function deleteCard(cardId) {
+    setSets(sets.map(set =>
+      set.id === activeSetId
+        ? { ...set, cards: set.cards.filter(card => card.id !== cardId) }
+        : set
+    ));
+  }
+
+  // Opens the edit form for a card, pre-filling state with its current values.
+  // Maps Firebase field names (q, a) to readable internal names (question, answer).
+  function startEditCard(card) {
+    setEditingCardId(card.id);
+    setEditCard({ question: card.q, answer: card.a });
+  }
+
+  // Saves the edited card back to the set.
+  // Guards against blank question or answer before calling setSets.
+  function saveCard(cardId) {
+    if (!editCard.question.trim() || !editCard.answer.trim()) return;
+    setSets(sets.map(set =>
+      set.id === activeSetId
+        ? { ...set, cards: set.cards.map(card => card.id === cardId ? { ...card, q: editCard.question.trim(), a: editCard.answer.trim() } : card) }
+        : set
+    ));
+    setEditingCardId(null);
   }
 
   function nextCard() {
@@ -29,40 +97,7 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
     setCardIndex(i => (i === 0 ? activeSet.cards.length - 1 : i - 1));
   }
 
-  const activeSet = sets.find(s => s.id === activeSetId);
-
-  function addCard() {
-    if (!newCard.question.trim() || !newCard.answer.trim()) return;
-    setSets(sets.map(set =>
-      set.id === activeSetId
-        ? { ...set, cards: [...set.cards, { id: Date.now(), q: newCard.question.trim(), a: newCard.answer.trim() }] }
-        : set
-    ));
-    setNewCard({ question: '', answer: '' }); setAddingCard(false);
-  }
-
-  function deleteCard(cardId) {
-    setSets(sets.map(set =>
-      set.id === activeSetId
-        ? { ...set, cards: set.cards.filter(c => c.id !== cardId) }
-        : set
-    ));
-  }
-
-  function startEditCard(card) {
-    setEditingCardId(card.id);
-    setEditCard({ question: card.q, answer: card.a });
-  }
-
-  function saveCard(cardId) {
-    if (!editCard.question.trim() || !editCard.answer.trim()) return;
-    setSets(sets.map(set =>
-      set.id === activeSetId
-        ? { ...set, cards: set.cards.map(c => c.id === cardId ? { ...c, q: editCard.question.trim(), a: editCard.answer.trim() } : c) }
-        : set
-    ));
-    setEditingCardId(null);
-  }
+  // ── Empty state ──────────────────────────────────────────────
 
   if (sets.length === 0) {
     return (
@@ -70,12 +105,15 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
         <h2>Flashcards</h2>
         <p style={{ color: '#888' }}>
           No flashcard sets yet. Go to{' '}
-          <a href="/courses" style={{ color: '#800080', fontWeight: 'bold' }}>Courses</a>
+          {/* REFACTOR: <a href> → <Link to> — see import comment above */}
+          <Link to="/courses" style={{ color: '#800080', fontWeight: 'bold' }}>Courses</Link>
           {' '}to create a course and add sets first!
         </p>
       </main>
     );
   }
+
+  // ── Main render ──────────────────────────────────────────────
 
   return (
     <main style={{ maxWidth: '960px', margin: '0 auto', padding: '20px' }}>
@@ -84,46 +122,50 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
 
       <div className="d-flex flex-column flex-md-row" style={{ gap: '24px', alignItems: 'flex-start', justifyContent: 'center' }}>
 
-
+        {/* Sidebar — set list */}
         <aside style={{ width: '200px', flexShrink: 0 }}>
           <h3 style={{ margin: '0 0 4px' }}>My Sets</h3>
           <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>
-            Add sets in <a href="/courses" style={{ color: '#800080' }}>Courses</a>.
+            {/* REFACTOR: <a href> → <Link to> */}
+            Add sets in <Link to="/courses" style={{ color: '#800080' }}>Courses</Link>.
           </p>
 
-          {sets.map(set => (
-            <div
-              key={set.id}
-              className={activeSetId === set.id ? 'btn-home flashcard-set-item' : 'course-card flashcard-set-item'}
-              style={{
-                cursor: 'pointer',
-                marginBottom: '8px',
-                display: 'block',
-                borderRadius: '12px',
-                padding: '1.5rem',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
-              }}
-              onClick={() => {
-                setActiveSetId(set.id);
-                setEditingCardId(null);
-                setAddingCard(false);
-                setCardIndex(0);
-              }}
-            >
-              <p style={{ margin: '0 0 2px', fontWeight: 'bold', fontSize: '14px' }}>{set.name}</p>
-              <p style={{ margin: 0, fontSize: '12px', opacity: 0.75 }}>
-                {set.cards.length} card(s)
-              </p>
-              {getCourseName(set.id) && (
-                <p style={{ margin: '2px 0 0', fontSize: '11px', opacity: 0.6 }}>
-                  {getCourseName(set.id)}
+          {sets.map(set => {
+            const courseName = getCourseName(set.id);
+            return (
+              <div
+                key={set.id}
+                className={activeSetId === set.id ? 'btn-home flashcard-set-item' : 'course-card flashcard-set-item'}
+                style={{
+                  cursor: 'pointer',
+                  marginBottom: '8px',
+                  display: 'block',
+                  borderRadius: '12px',
+                  padding: '1.5rem',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.23)',
+                }}
+                // REFACTOR (Testability): was an inline arrow calling 4 setters.
+                // Now delegates to the named selectSet() function above.
+                onClick={() => selectSet(set.id)}
+              >
+                <p style={{ margin: '0 0 2px', fontWeight: 'bold', fontSize: '14px' }}>{set.name}</p>
+                <p style={{ margin: 0, fontSize: '12px', opacity: 0.75 }}>
+                  {set.cards.length} card(s)
                 </p>
-              )}
-            </div>
-          ))}
+                {/* REFACTOR (Mysterious Names): getCourseName called once into a
+                    variable — previously called twice per set (once in the condition,
+                    once inside it), running the same find() twice unnecessarily. */}
+                {courseName && (
+                  <p style={{ margin: '2px 0 0', fontSize: '11px', opacity: 0.6 }}>
+                    {courseName}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </aside>
 
-
+        {/* Main panel — card editor */}
         {activeSet ? (
           <section style={{ flex: 1, minWidth: 0, maxWidth: '680px' }}>
             <h2 style={{ marginTop: 0 }}>{activeSet.name}</h2>
@@ -136,7 +178,7 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
               + Add Card
             </button>
 
-
+            {/* Add card form */}
             {addingCard && (
               <div style={{ background: '#f9f0f9', border: '1px dashed #800080', borderRadius: '10px', padding: '14px', marginBottom: '16px' }}>
                 <label htmlFor='new-card-question'>Question</label>
@@ -165,6 +207,7 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
               </div>
             )}
 
+            {/* Card display */}
             {activeSet.cards.length === 0 ? (
               <p style={{ color: '#888' }}>No cards yet — add your first one above!</p>
             ) : (
@@ -175,11 +218,21 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
                       {editingCardId === card.id ? (
                         <div>
                           <label htmlFor={`edit-question-${card.id}`}>Question</label>
-                          <input id={`edit-question-${card.id}`} name="edit-question" className="form-control mb-2" value={editCard.question} onChange={e => setEditCard({ ...editCard, question: e.target.value })} />
-
+                          <input
+                            id={`edit-question-${card.id}`}
+                            name="edit-question"
+                            className="form-control mb-2"
+                            value={editCard.question}
+                            onChange={e => setEditCard({ ...editCard, question: e.target.value })}
+                          />
                           <label htmlFor={`edit-answer-${card.id}`}>Answer</label>
-                          <input id={`edit-answer-${card.id}`} name="edit-answer" className="form-control mb-2" value={editCard.answer} onChange={e => setEditCard({ ...editCard, answer: e.target.value })} />
-
+                          <input
+                            id={`edit-answer-${card.id}`}
+                            name="edit-answer"
+                            className="form-control mb-2"
+                            value={editCard.answer}
+                            onChange={e => setEditCard({ ...editCard, answer: e.target.value })}
+                          />
                           <div className="button-row">
                             <button className="btn-home" onClick={() => saveCard(card.id)}>Save</button>
                             <button className="btn-home" onClick={() => setEditingCardId(null)}>Cancel</button>
@@ -210,6 +263,7 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
                     </article>
                   ))}
                 </div>
+
                 <div className="study-btn-row">
                   <button className="btn-home" onClick={prevCard}>Prev</button>
                   <button className="btn-home" onClick={nextCard}>Next</button>
@@ -223,6 +277,7 @@ function Flashcards({ sets = [], setSets = () => { }, courses = [] }) {
         ) : (
           <p style={{ color: '#888' }}>Select a set to start editing cards!</p>
         )}
+
       </div>
     </main>
   );
