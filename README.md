@@ -71,11 +71,15 @@ The Flashcards.jsx component receives a flattened sets array derived from nested
 
 ### Figure 1. Component Architecture Diagram
 ![Figure 1](src/assets/Figure1.jpeg)  
-Figure 1 highlights how App.jsx is the only node that touches Firebase directly. The Flashcards component sits in the middle of the hierarchy — receiving sets and setSets from App and rendering the card editor UI without needing to know anything about the broader course structure.
+*Figure 1: Implementation-level architecture of StudyHuskies showing component hierarchy, state flow, and Firebase connections.*
 
+Figure 1 shows the implementation-level architecture of StudyHuskies, highlighting how App.jsx is the only node that touches Firebase directly and acts as the central hub for all state and data flow. The Flashcards component is highlighted in purple as the assessed element — receiving sets and setSets from App and rendering the card editor UI without needing to know anything about the broader course structure.
 
-![Architecture Diagram](images/temp_architectural_diagram.jpg)
-*Figure 1: Architecture Diagram*
+### Figure 2. Full System Component Architecture Diagram
+![Architecture Diagram](images/architecture_diagram.jpg)
+*Figure 2: Full system component architecture diagram showing all client-side components, routing dependencies, data models, and external services.*
+
+Figure 2 provides a broader view of the full system, showing how all components relate to one another, how routing connects the pages, and how the data models map to the external Firebase services. Arrows with a diamond shape on the end indicate composition and dashed arrows indicate dependencies on other components such as routing and data use. See the legend in the top right corner for reference.
 
 ## Process Flows
 This section describes how information moves through the codebase during the three most important interactions in Study Huskies, described at the level of which components render, which state changes, and which functions are called.
@@ -93,9 +97,11 @@ When a user saves a card in Flashcards, the component calls setSets(newSets) —
 #### Quiz session
 A user navigates to /Quiz, which renders QuizMode. After selecting a set and number of lives, QuizMode calls props.setLives() to update App state, then calls navigate(/quiz/:setId). React Router renders QuizActive, which enters a gameplay loop tracking correct answers, lives, and missed cards. On completion, QuizActive calls navigate(/quiz/:setId/results, { state: scoreData }). React Router renders QuizReview, which reads the score from useLocation().state and displays the results.
 
-### Figure 2. Flashcard DataFlow Diagram
-![Figure 2](src/assets/Figure2.jpeg)
-Figure 2 highlights the key architectural feature of the Flashcards flow: all three mutation operations — add, edit, and delete — share the same write path back through App to Firebase. No data ever bypasses App on the way to the database.
+### Figure 3. Flashcard DataFlow Diagram
+![Figure 3](src/assets/Figure2.jpeg)
+*Figure 3: Data flow diagram showing how add, edit, and delete operations in Flashcards.jsx trigger App.jsx to merge and write the updated data to Firebase.*
+
+Figure 3 highlights the key architectural feature of the Flashcards flow: all three mutation operations — add, edit, and delete — share the same write path through App to Firebase. This is significant because it means Flashcards.jsx never communicates with Firebase directly, keeping data persistence logic centralized in App.jsx. No data ever bypasses App on the way to the database.
 
 ## Architecture Assessment
 ### Selected Element : Flashcards.jsx
