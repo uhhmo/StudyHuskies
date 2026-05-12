@@ -151,38 +151,39 @@ This component was chosen because it contains four distinct functions (addCard, 
 The unit tests target the `Flashcards` component (`src/pages/flashcards.jsx`). This component was chosen because it contains four distinct interactive functions (`addCard`, `deleteCard`, `startEditCard`, `saveCard`) plus multiple rendering branches (empty state, card display, add form, edit form), giving a wide range of behaviors to test. The tests verify both the happy paths (normal add/edit/delete, switching sets) and the unhappy paths (saving with blank inputs, canceling forms).
  
 ### Testing framework and setup
+Tests the `Flashcards` page component. The component receives `sets` and `setSets` as props, and all state mutations are verified through `setSets` mock calls.
+
+### `Flashcards.test.jsx`
+
+| Suite | Test | Description |
+|---|---|---|
+| **Empty state** | No sets message | Shows fallback text when `sets=[]` |
+| | Courses link | Confirms navigation link renders in empty state |
+| **Rendering** | Heading | Page-level heading is present |
+| | Set names | All set names from props appear in the list |
+| | Default card | First set's first card is shown on load |
+| | Set switching | Clicking a set name updates the active card view |
+| | Empty set | Shows fallback when a set exists but has no cards |
+| **Adding cards** | Form opens | `+ Add Card` button reveals the question/answer inputs |
+| | Saves new card | `setSets` is called with the new card appended to the correct set |
+| | Blank question | Validation blocks save when question is empty |
+| | Blank answer | Validation blocks save when answer is empty |
+| | Cancel closes form | Form unmounts without calling `setSets` |
+| **Deleting cards** | Delete card | `setSets` is called with the target card removed from the set |
+| **Editing cards** | Form pre-filled | Edit form inputs are pre-populated with existing card text |
+| | Saves edits | `setSets` is called with updated `q` and `a` on the correct card |
+| | Cancel discards | Form closes without calling `setSets` |
+
+## Test Conventions
+ 
+- **Cleanup** — `afterEach(cleanup)` is called in `Flashcards.test.jsx` to reset the DOM between tests.
+- **Mock data** — Shared `testSets` fixture is defined at the top of `Flashcards.test.jsx` and reused across suites.
+- **Mutation assertions** — State changes are verified by passing `vi.fn()` as `setSets` and inspecting `mock.calls[0][0]`.
+- **Routing** — The `Flashcards` component is wrapped in `<MemoryRouter>` since it uses React Router links.
  
 Tests are implemented using **Vitest** with **React Testing Library**. Vitest integrates with the project's Vite build pipeline. React Testing Library provides `render`, `screen`, and `fireEvent` for mounting components and simulating user interactions.
  
-The test environment is configured in `vite.config.js`:
- 
-```js
-test: {
-  globals: true,
-  environment: 'jsdom',
-  setupFiles: './src/test/setup.js',
-}
-```
- 
-The setup file (`src/test/setup.js`) imports jest-dom matchers for Vitest and registers a global `cleanup` after each test:
- 
-```js
-import '@testing-library/jest-dom/vitest';
-import { afterEach } from 'vitest';
-import { cleanup } from '@testing-library/react';
- 
-afterEach(() => {
-  cleanup();
-});
-```
- 
 ### How to run the tests
- 
-**Required dev dependencies:**
- 
-```bash
-npm install --save-dev vitest @testing-library/react @testing-library/jest-dom @testing-library/dom jsdom --legacy-peer-deps
-```
  
 **Run the suite:**
  
